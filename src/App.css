@@ -1,38 +1,188 @@
-.App {
+.time-segment-value {
+  box-shadow: 0px 0px 5px 1px rgb(255, 140, 0) !important;
+}
+
+#countdown-timer {
+  background-color: #333;
+  padding: 20px;
+  font-size: 1.2em;
+}
+
+.fcc__digit_block {
+  font-size: 2.5em;
+  /* font-size: 1.65em;
+  width: 30px;
+  height: 60px; */
+  font-weight: bold;
+  color: rgb(255, 140, 0);
+}
+
+.fcc__label {
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+@media (min-width: 992px) {
+  .main-card {
+    width: 75%;
+  }
+
+  .signup-form-section {
+    max-width: 33.33%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* General Page Styling */
+/* body {
+  background-color: #1b1b1b;
+  font-family: Arial, sans-serif;
+  color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#container {
+  width: 80%;
+  max-width: 1200px;
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  font-size: 2.5em;
+  color: rgb(255, 140, 0);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.5em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1em;
+  color: #ccc;
+  text-align: center;
+  line-height: 1.6;
+}
+
+#countdown-timer {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.fcc__digit_block {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: rgb(255, 140, 0);
+}
+
+.fcc__label {
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+#video-section {
+  margin: 20px 0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#video-section video {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#signup-form {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#signup-form h3 {
+  font-size: 1.3em;
+  color: rgb(255, 140, 0);
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+#signup-form label {
+  color: #bbb;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  display: block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#signup-form input[type="text"],
+#signup-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #444;
+  color: #fff;
+  font-size: 1em;
 }
+
+#signup-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  color: #fff;
+  background-color: rgb(255, 140, 0);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#signup-form button:hover {
+  background-color: #e68a00;
+}
+
+a {
+  color: rgb(255, 140, 0);
+  font-weight: bold;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+a:hover {
+  color: #fff;
+  background-color: rgb(255, 140, 0);
+}
+
+.text-links a {
+  margin-right: 15px;
+} */
