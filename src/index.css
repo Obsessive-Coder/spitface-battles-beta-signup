@@ -1,12 +1,17 @@
 body {
   background-color: #111 !important;
-  color: #888;
+  /* color: #888; */
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('../public//mainBG.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .text-bg-darker {
