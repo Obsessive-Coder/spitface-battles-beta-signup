@@ -15,7 +15,7 @@ import './App.css';
 function App() {
   return (
     <Container fluid id="container" className="py-3 d-flex flex-column bg-darkest">
-      <Card className="mx-auto shadow flex-fill text-secondary-emphasis bg-secondary-subtle border-0">
+      <Card className="main-card mx-auto shadow flex-fill text-secondary-emphasis bg-secondary-subtle border-0">
         <CardBody>
           <section className="d-flex flex-column flex-md-row align-items-center align-items-md-start">
             <div className="flex-basis-45">
