@@ -1,0 +1,104 @@
+.flip-digit {
+  position: relative;
+  width: 60px;
+  height: 80px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(255, 140, 0);
+  /* Brand color */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.flip-top,
+.flip-bottom {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  line-height: 80px;
+  /* Adjust to center the number vertically */
+  backface-visibility: hidden;
+}
+
+.flip-top {
+  top: 0;
+  transform-origin: bottom;
+}
+
+.flip-bottom {
+  bottom: 0;
+  transform-origin: top;
+}
+
+.flip-digit .flip-top {
+  animation: flip-top 1s forwards;
+}
+
+.flip-digit .flip-bottom {
+  animation: flip-bottom 1s forwards;
+}
+
+@keyframes flip-top {
+  0% {
+    transform: rotateX(0);
+  }
+
+  50% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+@keyframes flip-bottom {
+  0% {
+    transform: rotateX(180deg);
+  }
+
+  50% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+.countdown-unit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .flip-digit {
+    width: 50px;
+    height: 70px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .flip-digit {
+    width: 55px;
+    height: 75px;
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .flip-digit {
+    width: 60px;
+    height: 80px;
+    font-size: 2rem;
+  }
+}

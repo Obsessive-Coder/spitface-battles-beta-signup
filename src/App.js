@@ -6,8 +6,9 @@ import {
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 // Custom Components.
-import BetaCountdown from './components/BetaCountdown';
+import BetaCountDown from './components/BetaCountDown';
 import BetaSignupForm from './components/BetaSignupForm';
+import CountDownTime from './components/CountDownTime';
 
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import './App.css';
@@ -31,7 +32,8 @@ function App() {
             </div>
 
             <div id="countdown-timer" className="flex-fill shadow" style={{ maxWidth: '33.33% !important' }}>
-              <BetaCountdown />
+              {/* <CountDownTime /> */}
+              <BetaCountDown />
             </div>
           </section>
 
@@ -79,7 +81,7 @@ function App() {
     //           Special Title Treatment
     //         </CardTitle>
 
-    //         <BetaCountdown />
+    //         <BetaCountDown />
     //       </CardBody>
     //       <CardFooter className="text-bg-darker border-0">
     //         Footer

@@ -6,7 +6,7 @@ import '@leenguyen/react-flip-clock-countdown/dist/index.css';
 // Bootstrap Components.
 import { Button, Card, CardBody, CardHeader, CardFooter, CardTitle } from 'reactstrap';
 
-function BetaCountdown() {
+function BetaCountDown() {
 
   return (
     <Card className="flex-fill border-0 rounded-0 text-bg-darkest shadow-lg">
@@ -35,4 +35,4 @@ function BetaCountdown() {
   )
 }
 
-export default BetaCountdown;
+export default BetaCountDown;
