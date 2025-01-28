@@ -1,6 +1,6 @@
 body {
   background-color: #111 !important;
-  /* color: #888; */
+  color: #888;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -8,19 +8,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: url('../public//mainBG.webp');
+  /* background-image: url('../public//mainBG.webp');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center; */
+}
+
+.border-primary-orange {
+  border-color: rgb(255, 140, 0);
 }
 
 .text-bg-darker {
-  color: #fff;
+  color: #888;
   background-color: #222;
 }
 
 .text-bg-darkest {
-  color: #fff;
+  color: #888;
   background-color: #111;
 }
 

@@ -32,6 +32,39 @@
   transform-origin: center top;
 } */
 
+.card-container {
+  perspective: 1000px; /* Creates the 3D viewing environment */
+  display: flex;
+  flex-direction: column; /* Stack cards vertically */
+  justify-content: center; /* Centers the cards vertically */
+  align-items: center; /* Centers the cards horizontally */
+  height: 100vh; /* Full screen height for proper centering */
+  gap: 5rem;
+}
+
+.main-card {
+  width: 32rem;
+  /* height: 15rem !important; */
+  background: linear-gradient(145deg, #333, #111); /* Gives a sleek dark look */
+  color: #fff;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+  transform: rotateX(-15deg) rotateY(15deg) rotateZ(-2deg); /* Angles to make it stand up and slightly turned */
+  transform-origin: center bottom; /* Pivot point for the rotation */
+  margin-bottom: -7rem; /* Adjusts the card's vertical position */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation on hover if added */
+}
+
+.secondary-card {
+  width: 20rem;
+  /* height: 12rem !important; */
+  background: linear-gradient(145deg, #222, #000); /* Subtle gradient for depth */
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* Subtle shadow */
+  transform: rotateX(50deg) rotateY(7deg) rotateZ(-17deg); /* Adds counterclockwise spin */
+  transform-origin: center center; /* Pivot at the center for a natural perspective */
+}
+
+
 
 
 
@@ -62,10 +95,12 @@
   color: rgb(255, 140, 0);
 }
 
-.fcc__label {
-  /* font-size: 0.9em; */
-  color: #bbb;
-}
+/* .fcc__label {
+  font-size: 1.5rem;
+  color: #888;
+  font-weight: bold;
+  text-transform: uppercase;
+} */
 
 
 #countdown-timer {
@@ -108,7 +143,7 @@
   }
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .main-card {
     width: 75%;
   }
@@ -116,7 +151,7 @@
   .signup-form-section {
     max-width: 33.33%;
   }
-}
+} */
 
 
 

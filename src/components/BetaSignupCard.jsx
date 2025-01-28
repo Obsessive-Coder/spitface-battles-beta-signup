@@ -5,7 +5,7 @@ import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label
 
 import api from '../utils';
 
-const BetaSignupForm = () => {
+const BetaSignupCard = () => {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -105,12 +105,12 @@ const BetaSignupForm = () => {
   const isFormValid = validation.username.isValid && validation.email.isValid;
 
   return (
-    <Card className="border-0 rounded-0 shadow-lg">
-      <CardHeader className="border-0 p-0 rounded-top-0 text-bg-darkest">
-        <CardTitle className="text-center fs-2 m-0">Beta Signup</CardTitle>
+    <Card className="rounded-0 border-0 text-bg-darkest secondary-card">
+      <CardHeader className="text-bg-darkest rounded-0 border-0">
+        <CardTitle className="text-center fs-2 fw-bold m-0">Beta Signup</CardTitle>
       </CardHeader>
 
-      <CardBody className="bg-secondary-subtle rounded-bottom-0">
+      <CardBody className="bg-secondary-subtle rounded-0">
         <CardText className="text-center small">
           Sign up to join our exclusive beta and experience the future of rap battles. Be among the first to build your reputation and connect with rivals worldwide.
         </CardText>
@@ -159,4 +159,4 @@ const BetaSignupForm = () => {
   );
 };
 
-export default BetaSignupForm;
+export default BetaSignupCard;
