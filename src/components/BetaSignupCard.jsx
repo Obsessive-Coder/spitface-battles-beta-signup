@@ -105,12 +105,12 @@ const BetaSignupCard = () => {
   const isFormValid = validation.username.isValid && validation.email.isValid;
 
   return (
-    <Card className="rounded-0 border-0 text-bg-darkest secondary-card">
-      <CardHeader className="text-bg-darkest rounded-0 border-0">
+    <Card className="rounded-0 border-0 bg-darkest secondary-card">
+      <CardHeader className="text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
         <CardTitle className="text-center fs-2 fw-bold m-0">Beta Signup</CardTitle>
       </CardHeader>
 
-      <CardBody className="bg-secondary-subtle rounded-0">
+      <CardBody className="text-bg-darkest rounded-0">
         <CardText className="text-center small">
           Sign up to join our exclusive beta and experience the future of rap battles. Be among the first to build your reputation and connect with rivals worldwide.
         </CardText>
@@ -127,9 +127,9 @@ const BetaSignupCard = () => {
               invalid={!validation.username.isValid}
               onBlur={handleUsernameCheck}
               onChange={handleChange}
-              className="bg-body-tertiary"
+              className="text-light bg-darker border-dark"
             />
-            <Label for="username">Username</Label>
+            <Label for="username" className="text-secondary beta-form-label">Username</Label>
             <FormFeedback>{validation.username.message}</FormFeedback>
           </FormGroup>
 
@@ -144,13 +144,13 @@ const BetaSignupCard = () => {
               invalid={!validation.email.isValid}
               onBlur={handleEmailCheck}
               onChange={handleChange}
-              className="bg-body-tertiary"
+              className="text-light bg-darker border-dark"
             />
-            <Label for="email">Email</Label>
+            <Label for="email" className="text-secondary beta-form-label">Email</Label>
             <FormFeedback>{validation.email.message}</FormFeedback>
           </FormGroup>
 
-          <Button block type="submit" size="sm" disabled={loading || !isFormValid} className="text-bg-darkest">
+          <Button block type="submit" size="sm" disabled={loading || !isFormValid} className="text-bg-darkest btn-outline-primary">
             {loading ? 'Submitting...' : 'Submit'}
           </Button>
         </Form>

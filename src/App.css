@@ -39,24 +39,24 @@
   justify-content: center; /* Centers the cards vertically */
   align-items: center; /* Centers the cards horizontally */
   height: 100vh; /* Full screen height for proper centering */
-  gap: 5rem;
+  /* gap: 2rem; */
 }
 
 .main-card {
-  width: 32rem;
+  width: 40rem;
   /* height: 15rem !important; */
   background: linear-gradient(145deg, #333, #111); /* Gives a sleek dark look */
   color: #fff;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
   transform: rotateX(-15deg) rotateY(15deg) rotateZ(-2deg); /* Angles to make it stand up and slightly turned */
   transform-origin: center bottom; /* Pivot point for the rotation */
-  margin-bottom: -7rem; /* Adjusts the card's vertical position */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation on hover if added */
+  /* margin-bottom: -7rem;  */
 }
 
 .secondary-card {
-  width: 20rem;
+  width: 25rem;
   /* height: 12rem !important; */
+  left: -115px;
   background: linear-gradient(145deg, #222, #000); /* Subtle gradient for depth */
   color: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* Subtle shadow */
@@ -64,19 +64,9 @@
   transform-origin: center center; /* Pivot at the center for a natural perspective */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+.beta-form-label::after{
+  background-color: #111 !important;
+}
 
 
 /* .time-segment-value {

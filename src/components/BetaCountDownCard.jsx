@@ -57,11 +57,11 @@ function BetaCountDownCard() {
       </CardBody>
 
       <CardFooter className="d-flex text-bg-darkest border-0">
-        <div className='flex-grow-1 flex-basis-0 text-center border pb-1'>Your Stage</div>
+        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1'>Your Stage</div>
 
-        <div className='flex-grow-1 flex-basis-0 text-center border pb-1 mx-2'>Your Skills</div>
+        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1 mx-2'>Your Skills</div>
 
-        <div className='flex-grow-1 flex-basis-0 text-center border pb-1'>Your Voice</div>
+        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1'>Your Voice</div>
       </CardFooter>
     </Card>
   )
