@@ -49,10 +49,9 @@ function BetaCountDownCard() {
           to={'05/01/2025'}
           showSeparators={false}
           labels={['days', 'hours', 'mins', 'secs']}
-          digitBlockStyle={{ borderRadius: '35%', backgroundColor: '#222' }}
-          dividerStyle={{ color: '#555' }}
-          labelStyle={{ color: '#888', fontSize: '1.5rem', fontWeight: 'bold', textTransform: 'uppercase'}}
-          className="justify-content-center"
+          digitBlockStyle={{ fontWeight: 'bold'}}
+          labelStyle={{ fontWeight: 'bold', textTransform: 'uppercase'}}
+          className="justify-content-center flip-clock"
         />
       </CardBody>
 
