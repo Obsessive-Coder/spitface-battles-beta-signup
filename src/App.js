@@ -17,7 +17,7 @@ import './App.css';
 function App() {
   return (
     <Container fluid>
-      <div className="flex-column card-container">
+      <div className="card-container">
        <BetaCountDownCard />
 
        <BetaSignupCard />

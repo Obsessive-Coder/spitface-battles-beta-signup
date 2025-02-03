@@ -151,6 +151,8 @@
 @media (max-width: 576px) {
   .card-container {
     perspective: none;
+    justify-content: start;
+    padding: 1.5rem;
   }
   
   .main-card {

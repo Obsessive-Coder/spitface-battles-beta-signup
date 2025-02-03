@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const INVALID_CHARACTERS = ['<', '>', '\\', '`', '{', '|', '}'];
+
 // Base Axios instance
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080/users',
@@ -12,6 +14,56 @@ const axiosInstance = axios.create({
 const handleApiError = (error) => {
   console.error('API Error:', error?.response?.data || error.message);
   throw error.response?.data || error.message; // Re-throw for higher-level handling
+};
+
+const isTextValid = text => {
+    for (let i = 0; i < INVALID_CHARACTERS.length; i++) {
+      if (text.toString().includes(INVALID_CHARACTERS[i])) return false;
+    }
+    return true;
+  }
+
+const validateUsername = username => {
+  const response = {};
+
+  if (!username || !username.trim()) {
+    response.isValid = false;
+    response.validationMessage = 'Username is required'
+  }
+
+  if (!isTextValid(username)) {
+    response.isValid = false;
+    response.validationMessage = 'Username is invalid'
+  }
+
+  if (!Object.keys(response).includes('isValid')) {
+    response.isValid = true;
+    response.validationMessage = 'Username is available'
+  }
+
+  return response;
+};
+
+const validateEmail = email => {
+  const response = {};
+
+  if (!email || !email.trim()) {
+    response.isValid = false;
+    response.validationMessage = 'Email is required'
+  }
+
+  if (!isTextValid(email)) {
+    response.isValid = false;
+    response.validationMessage = 'Email is invalid'
+  }
+
+  if (!Object.keys(response).includes('isValid')) {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    response.isValid = isValid;
+    response.validationMessage = isValid ? 'Email is available' : 'Invalid email format';
+  }
+
+  return response;
 };
 
 // API methods
