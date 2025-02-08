@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
-import api from '../utils';
+import {api, validateEmail, validateUsername } from '../utils';
 
 const BetaSignupCard = () => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +17,30 @@ const BetaSignupCard = () => {
     username: { isValid: true, message: '' },
     email: { isValid: true, message: '' },
   });
+
+  const handleValidateUsername = () => {
+    const usernameValidation = validateUsername(formData.username);
+    if (!usernameValidation.isValid) {
+      setValidation({
+        ...validation,
+        username: { ...usernameValidation }
+      });
+    } else {
+      handleUsernameCheck();
+    }    
+  };
+
+  const handleValidateEmail = () => {
+    const emailValidation = validateEmail(formData.email);
+    if (!emailValidation.isValid) {
+      setValidation({
+        ...validation,
+        email: { ...emailValidation }
+      });
+    } else {
+      handleEmailCheck();
+    }
+  };
 
   const handleUsernameCheck = debounce(async () => {
     try {
@@ -87,8 +111,8 @@ const BetaSignupCard = () => {
     setLoading(true);
 
     // Perform final validation checks
-    await handleUsernameCheck();
-    await handleEmailCheck();
+    await handleValidateUsername();
+    await handleValidateEmail();
 
     // If either field is invalid, prevent form submission
     if (!validation.username.isValid || !validation.email.isValid) {
@@ -100,6 +124,7 @@ const BetaSignupCard = () => {
     // Proceed with form submission if both fields are valid
     handleAddUser();
     setLoading(false);
+    setFormData({ username: '', email: '' })
   };
 
   const isFormValid = validation.username.isValid && validation.email.isValid;
@@ -119,13 +144,14 @@ const BetaSignupCard = () => {
           <FormGroup floating>
             <Input
               required
+              bsSize='sm'
               type="text"
               name="username"
               id="username"
               placeholder="Enter username"
               value={formData.username}
               invalid={!validation.username.isValid}
-              onBlur={handleUsernameCheck}
+              onBlur={handleValidateUsername}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />
@@ -136,13 +162,14 @@ const BetaSignupCard = () => {
           <FormGroup floating>
             <Input
               required
+              bsSize='sm'
               type="email"
               name="email"
               id="email"
               placeholder="Enter email"
               value={formData.email}
               invalid={!validation.email.isValid}
-              onBlur={handleEmailCheck}
+              onBlur={handleValidateEmail}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />

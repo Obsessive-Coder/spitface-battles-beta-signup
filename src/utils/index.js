@@ -23,51 +23,54 @@ const isTextValid = text => {
     return true;
   }
 
-const validateUsername = username => {
-  const response = {};
+export const validateUsername = username => {
+  const response = { isValid: true, message: "Valid username." };
 
-  if (!username || !username.trim()) {
+  // Check for valid characters (letters, numbers, _.-')
+  const validCharacters = /^[a-zA-Z0-9._'-]+$/;
+  if (!validCharacters.test(username)) {
     response.isValid = false;
-    response.validationMessage = 'Username is required'
+    response.message = "Username can only contain letters, numbers, and the characters: _ . ' -";
   }
 
-  if (!isTextValid(username)) {
+  // Check for consecutive spaces or special characters
+  if (/( {2,}|[-'._]{2,})/.test(username)) {
     response.isValid = false;
-    response.validationMessage = 'Username is invalid'
+    response.message = "No consecutive spaces or special characters are allowed.";
   }
 
-  if (!Object.keys(response).includes('isValid')) {
-    response.isValid = true;
-    response.validationMessage = 'Username is available'
+  // Check length (between 3 and 22 characters)
+  if (username.length < 3 || username.length > 22) {
+    response.isValid = false;
+    response.message = "Username must be between 3 and 22 characters.";
   }
 
   return response;
 };
 
-const validateEmail = email => {
-  const response = {};
+export const validateEmail = email => {
+  const response = { isValid: true, message: "Valid email address." };
 
-  if (!email || !email.trim()) {
+  // Regular expression for validating an email address
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+  // Check if the email matches the general pattern
+  if (!emailRegex.test(email)) {
     response.isValid = false;
-    response.validationMessage = 'Email is required'
+    response.message = "Please enter a valid email address.";
   }
 
-  if (!isTextValid(email)) {
+  // Check if the email is too short or too long (basic limits)
+  if (email.length < 5 || email.length > 100) {
     response.isValid = false;
-    response.validationMessage = 'Email is invalid'
-  }
-
-  if (!Object.keys(response).includes('isValid')) {
-    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    response.isValid = isValid;
-    response.validationMessage = isValid ? 'Email is available' : 'Invalid email format';
+    response.message = "Email must be between 5 and 100 characters.";
   }
 
   return response;
 };
 
 // API methods
-const api = {
+export const api = {
   // Fetch all users
   fetchUsers: async () => {
     try {
