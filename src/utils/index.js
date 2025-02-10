@@ -16,13 +16,6 @@ const handleApiError = (error) => {
   throw error.response?.data || error.message; // Re-throw for higher-level handling
 };
 
-const isTextValid = text => {
-    for (let i = 0; i < INVALID_CHARACTERS.length; i++) {
-      if (text.toString().includes(INVALID_CHARACTERS[i])) return false;
-    }
-    return true;
-  }
-
 export const validateUsername = username => {
   const response = { isValid: true, message: "Valid username." };
 
