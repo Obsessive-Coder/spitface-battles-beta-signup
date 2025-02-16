@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce';
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
 import {api, validateEmail, validateUsername } from '../utils';
+import { signUp } from '../utils/auth';
+import { saveUser } from '../utils/api';
 
 const BetaSignupCard = () => {
   const [loading, setLoading] = useState(false);
@@ -11,11 +13,13 @@ const BetaSignupCard = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
+    password: 'Password1!'
   });
 
   const [validation, setValidation] = useState({
     username: { isValid: true, message: '' },
     email: { isValid: true, message: '' },
+    password: { isValid: true, message: '' }
   });
 
   const handleValidateUsername = () => {
@@ -26,7 +30,7 @@ const BetaSignupCard = () => {
         username: { ...usernameValidation }
       });
     } else {
-      handleUsernameCheck();
+      // handleUsernameCheck();
     }    
   };
 
@@ -38,7 +42,7 @@ const BetaSignupCard = () => {
         email: { ...emailValidation }
       });
     } else {
-      handleEmailCheck();
+      // handleEmailCheck();
     }
   };
 
@@ -89,11 +93,20 @@ const BetaSignupCard = () => {
   }, 300);
 
   const handleAddUser = debounce(async () => {
+    // try {
+    //   const newUser = await api.addUser(formData.username, formData.email);
+    //   console.log('User successfully added:', newUser);
+    // } catch (error) {
+    //   console.error('Failed to add user:', error);
+    // }
+
     try {
-      const newUser = await api.addUser(formData.username, formData.email);
-      console.log('User successfully added:', newUser);
+      const { email, username, password } = formData;
+      await signUp(email, password, username);
+      await saveUser(email, username);
+      alert('Signup successful! Check your email for verification.');
     } catch (error) {
-      console.error('Failed to add user:', error);
+      alert(error.message);
     }
   }, 300);
 
@@ -124,7 +137,7 @@ const BetaSignupCard = () => {
     // Proceed with form submission if both fields are valid
     handleAddUser();
     setLoading(false);
-    setFormData({ username: '', email: '' })
+    setFormData({ username: '', email: '', password: 'Password1!' })
   };
 
   const isFormValid = validation.username.isValid && validation.email.isValid;

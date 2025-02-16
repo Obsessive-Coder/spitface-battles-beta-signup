@@ -1,3 +1,5 @@
+import './utils/amplifyConfig';
+
 // Bootstrap Components.
 import {
   Container, Card, CardBody, CardFooter, CardHeader, CardTitle, CardText, List, ListInlineItem
