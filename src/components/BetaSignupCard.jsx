@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
-import {api, validateEmail, validateUsername } from '../utils';
+import {validateEmail, validateUsername } from '../utils';
 // import { signUp } from '../utils/auth';
 
 const BetaSignupCard = ({ showAlert }) => {
@@ -44,52 +44,6 @@ const BetaSignupCard = ({ showAlert }) => {
       // handleEmailCheck();
     }
   };
-
-  const handleUsernameCheck = debounce(async () => {
-    try {
-      const isTaken = await api.checkUsername(formData.username);
-      if (isTaken) {
-        setValidation({
-          ...validation,
-          username: { isValid: false, message: 'Username is already taken.' },
-        });
-      } else {
-        setValidation({
-          ...validation,
-          username: { isValid: true, message: '' },
-        });
-      }
-    } catch (error) {
-      console.error('Error checking username:', error);
-      setValidation({
-        ...validation,
-        username: { isValid: false, message: 'Error validating username.' },
-      });
-    }
-  }, 300);
-
-  const handleEmailCheck = debounce(async () => {
-    try {
-      const isTaken = await api.checkEmail(formData.email);
-      if (isTaken) {
-        setValidation({
-          ...validation,
-          email: { isValid: false, message: 'Email is already taken.' },
-        });
-      } else {
-        setValidation({
-          ...validation,
-          email: { isValid: true, message: '' },
-        });
-      }
-    } catch (error) {
-      console.error('Error checking email:', error);
-      setValidation({
-        ...validation,
-        email: { isValid: false, message: 'Error validating email.' },
-      });
-    }
-  }, 300);
 
   const handleAddUser = debounce(async () => {
     try {
