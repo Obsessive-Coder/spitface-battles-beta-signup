@@ -8,7 +8,7 @@ import VerificationInput from 'react-verification-input';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { confirmSignUp } from '../utils/auth';
+// import { confirmSignUp } from '../utils/auth';
 
 export default function AlertModal({ alertConfig = {}, confirmButtonProps = {}, handleConfirmSuccess = () => null, handleCloseOnClick = () => null }) {
   const [verificationCode, setVerificationCode] = useState('');
@@ -28,8 +28,8 @@ export default function AlertModal({ alertConfig = {}, confirmButtonProps = {}, 
     // console.log('Validate Code: ', event);
 
     try {
-        await confirmSignUp(username, verificationCode);
-        handleConfirmSuccess()
+        // await confirmSignUp(username, verificationCode);
+        // handleConfirmSuccess()
         // Handle success (redirect, success message, etc.)
     } catch (error) {
         console.error('Error confirming sign up', error);

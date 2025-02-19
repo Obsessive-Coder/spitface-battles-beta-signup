@@ -4,8 +4,7 @@ import debounce from 'lodash.debounce';
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
 import {api, validateEmail, validateUsername } from '../utils';
-import { signUp } from '../utils/auth';
-// import { saveUser } from '../utils/api';
+// import { signUp } from '../utils/auth';
 
 const BetaSignupCard = ({ showAlert }) => {
   const [loading, setLoading] = useState(false);
@@ -95,8 +94,8 @@ const BetaSignupCard = ({ showAlert }) => {
   const handleAddUser = debounce(async () => {
     try {
       const { email, username, password } = formData;
-      await signUp(email, password, username);
-      showAlert(username, email, `Hi ${username},\nPlease enter the verification code sent to ${email}.`, true);
+      // await signUp(email, password, username);
+      // showAlert(username, email, `Hi ${username},\nPlease enter the verification code sent to ${email}.`, true);
     } catch (error) {
       alert(error.message);
     }
