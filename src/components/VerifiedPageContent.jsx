@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Card, CardBody, CardHeader, CardTitle, CardText, CardSubtitle, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faUser, faPeopleArrows, faNetworkWired, faComments, faHandshake, faCalendarDay } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faPeopleArrows, faComments, faHandshake, faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 
 const nextSteps = [{
     title: "Beta Launch",
