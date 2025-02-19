@@ -5,9 +5,9 @@ import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label
 
 import {api, validateEmail, validateUsername } from '../utils';
 import { signUp } from '../utils/auth';
-import { saveUser } from '../utils/api';
+// import { saveUser } from '../utils/api';
 
-const BetaSignupCard = () => {
+const BetaSignupCard = ({ showAlert }) => {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -93,18 +93,10 @@ const BetaSignupCard = () => {
   }, 300);
 
   const handleAddUser = debounce(async () => {
-    // try {
-    //   const newUser = await api.addUser(formData.username, formData.email);
-    //   console.log('User successfully added:', newUser);
-    // } catch (error) {
-    //   console.error('Failed to add user:', error);
-    // }
-
     try {
       const { email, username, password } = formData;
       await signUp(email, password, username);
-      await saveUser(email, username);
-      alert('Signup successful! Check your email for verification.');
+      showAlert(username, email, `Hi ${username},\nPlease enter the verification code sent to ${email}.`, true);
     } catch (error) {
       alert(error.message);
     }

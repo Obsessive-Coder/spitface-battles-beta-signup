@@ -1,29 +1,23 @@
 import './utils/amplifyConfig';
 
-// Bootstrap Components.
-import {
-  Container, Card, CardBody, CardFooter, CardHeader, CardTitle, CardText, List, ListInlineItem
-} from 'reactstrap';
+import { Route, Routes } from 'react-router-dom';
 
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+// Bootstrap Components.
+import { Container } from 'reactstrap';
 
 // Custom Components.
-import BetaCountDownCard from './components/BetaCountDownCard';
-import BetaSignupCard from './components/BetaSignupCard';
-import CountDownTime from './components/CountDownTime';
+import MainPageContent from './components/MainPageContent';
+import VerifiedPageContent from './components/VerifiedPageContent';
 
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import './App.css';
 
 function App() {
   return (
     <Container fluid>
-      <div className="card-container">
-       <BetaCountDownCard />
-
-       <BetaSignupCard />
-      </div>
+          <Routes>
+            <Route path="/" element={<MainPageContent />} />
+            <Route path="/verified" element={<VerifiedPageContent />} />
+          </Routes>
     </Container >
   );
 }

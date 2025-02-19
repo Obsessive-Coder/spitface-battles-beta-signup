@@ -14,6 +14,11 @@ body {
   background-position: center; */
 }
 
+.alert-confirm:focus {
+  background-color: rgb(255,140,0);
+  color: white !important;
+}
+
 .btn:hover,
 .btn.active.focus,
 .btn.active:focus,
@@ -40,6 +45,10 @@ body {
   border-color: rgb(255, 140, 0) !important;
 }
 
+.border-primary-orange-subtle {
+  border-color: rgba(255, 180, 90, 0.3) !important;
+}
+
 .text-bg-darker {
   color: #888;
   background-color: #222;
@@ -56,6 +65,10 @@ body {
 
 .text-primary-orange {
   color: rgb(255, 140, 0);
+}
+
+.text-primary-orange-emphasis {
+  color: rgba(255, 180, 90, 0.3) !important;
 }
 
 .bg-darker {

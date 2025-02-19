@@ -32,6 +32,20 @@
   transform-origin: center top;
 } */
 
+
+
+
+/* text-light bg-darker border-dark */
+
+.verification-code-character {
+  border-color: #212529 ;
+  font-size: 22pt;
+  font-weight: bold;
+  border-radius: 0;
+  color: #f8f9fa;
+  background-color: #222;
+}
+
 .card-container {
   perspective: 1000px;
   display: flex;
