@@ -8,8 +8,6 @@ import VerificationInput from 'react-verification-input';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// import { confirmSignUp } from '../utils/auth';
-
 export default function AlertModal({ alertConfig = {}, confirmButtonProps = {}, handleConfirmSuccess = () => null, handleCloseOnClick = () => null }) {
   const [verificationCode, setVerificationCode] = useState('');
 

@@ -3,8 +3,7 @@ import debounce from 'lodash.debounce';
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
-import {validateEmail, validateUsername } from '../utils';
-// import { signUp } from '../utils/auth';
+import { validateEmail, validateUsername } from '../utils';
 
 const BetaSignupCard = ({ showAlert }) => {
   const [loading, setLoading] = useState(false);
