@@ -4,7 +4,7 @@ export const validateUsername = username => {
   const response = { isValid: true, message: "Valid username." };
 
   // Check for valid characters (letters, numbers, _.-')
-  const validCharacters = /^[a-zA-Z0-9._'-]+$/;
+  const validCharacters = /^[a-zA-Z0-9._'-]+(?: [a-zA-Z0-9._'-]+)?$/;
   if (!validCharacters.test(username)) {
     response.isValid = false;
     response.message = "Username can only contain letters, numbers, and the characters: _ . ' -";

@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
 import { validateEmail, validateUsername } from '../utils';
+import { writeNewUser } from '../utils/firebase/firestore';
 
 const BetaSignupCard = ({ showAlert }) => {
   const [loading, setLoading] = useState(false);
@@ -11,13 +12,11 @@ const BetaSignupCard = ({ showAlert }) => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: 'Password1!'
   });
 
   const [validation, setValidation] = useState({
     username: { isValid: true, message: '' },
     email: { isValid: true, message: '' },
-    password: { isValid: true, message: '' }
   });
 
   const handleValidateUsername = () => {
@@ -46,8 +45,13 @@ const BetaSignupCard = ({ showAlert }) => {
 
   const handleAddUser = debounce(async () => {
     try {
-      const { email, username, password } = formData;
-      // await signUp(email, password, username);
+      const { email, username } = formData;
+      const userDocRef = await writeNewUser(username, email);
+      
+      if (userDocRef.id) {
+        console.log("HERE -- Created Document: ", userDocRef.id);
+      }
+
       // showAlert(username, email, `Hi ${username},\nPlease enter the verification code sent to ${email}.`, true);
     } catch (error) {
       alert(error.message);
@@ -62,14 +66,14 @@ const BetaSignupCard = ({ showAlert }) => {
     setValidation({ ...validation, [name]: { isValid: true, message: '' } });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     setLoading(true);
 
     // Perform final validation checks
-    await handleValidateUsername();
-    await handleValidateEmail();
+    // handleValidateUsername();
+    // handleValidateEmail();
 
     // If either field is invalid, prevent form submission
     if (!validation.username.isValid || !validation.email.isValid) {
@@ -81,7 +85,7 @@ const BetaSignupCard = ({ showAlert }) => {
     // Proceed with form submission if both fields are valid
     handleAddUser();
     setLoading(false);
-    setFormData({ username: '', email: '', password: 'Password1!' })
+    setFormData({ username: '', email: ''})
   };
 
   const isFormValid = validation.username.isValid && validation.email.isValid;
@@ -108,7 +112,7 @@ const BetaSignupCard = ({ showAlert }) => {
               placeholder="Enter username"
               value={formData.username}
               invalid={!validation.username.isValid}
-              onBlur={handleValidateUsername}
+              // onBlur={handleValidateUsername}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />
@@ -126,7 +130,7 @@ const BetaSignupCard = ({ showAlert }) => {
               placeholder="Enter email"
               value={formData.email}
               invalid={!validation.email.isValid}
-              onBlur={handleValidateEmail}
+              // onBlur={handleValidateEmail}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />
