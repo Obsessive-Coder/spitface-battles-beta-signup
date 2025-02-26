@@ -46,8 +46,8 @@ const BetaSignupCard = ({ showAlert }) => {
       const isUsernameAvailable = await checkUsernameAvailability(username);
       
       if (isUsernameAvailable) {
-        await createUser(username, email, 'Password1!');
-        await storeUsername(username);
+        const { uid: userId } = await createUser(username, email, 'Password1!');
+        await storeUsername(userId, username);
         showAlert(`Hi ${username}, We've sent a verification link to ${email}. Please check your inbox and click the link to confirm your account.`, false);
       }
     } catch ({ code = '', message = '' }) {
@@ -84,7 +84,6 @@ const BetaSignupCard = ({ showAlert }) => {
 
     // If either field is invalid, prevent form submission
     if (!validation.username.isValid || !validation.email.isValid) {
-      alert()
       setLoading(false);
       console.log('Form submission blocked due to validation errors.');
       return;

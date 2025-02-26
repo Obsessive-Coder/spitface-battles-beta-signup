@@ -17,10 +17,12 @@ export const checkUsernameAvailability = async username => {
     }
 };
 
-export const storeUsername = async username => {
+export const storeUsername = async (userId, username) => {
+    if (!userId || !username) return;
+    
     try {
         const usernamesRef = collection(firestoreDB, "reserved_usernames");
-        await addDoc(usernamesRef, { username });
+        await addDoc(usernamesRef, { userId, username });
     } catch (error) {
         throw new Error(error);
     }
