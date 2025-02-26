@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function AlertModal({ alertConfig = {}, confirmButtonProps = {}, handleConfirmSuccess = () => null, handleCloseOnClick = () => null }) {
   const [verificationCode, setVerificationCode] = useState('');
 
-  const { isOpen = false, message = '', isConfirm = false, username = '', email = '' } = alertConfig;
+  const { isOpen = false, message = '', isConfirm = false } = alertConfig;
 
   const handleVerificationCodeChange = code => {
     const codeRegex = /^\d{0,6}$/;

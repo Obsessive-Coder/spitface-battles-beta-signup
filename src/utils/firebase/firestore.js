@@ -1,16 +1,27 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import firebaseApp from "./config";
+import { firestoreDB } from "./config";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 
-export const writeNewUser = async (username, email) => {
-  try {
-    const db = getFirestore(firebaseApp);
-    const usersCollection = collection(db, 'beta_users');
+export const checkUsernameAvailability = async username => {
+    try {
+        const usernamesRef = collection(firestoreDB, "reserved_usernames");
+        const q = query(usernamesRef, where("username", "==", username));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+            throw new Error("Custom: Error (custom/username-already-in-use)", { cause: { code: 'custom/username-already-in-use' }});
+        }
 
-    const userDocRef = await addDoc(usersCollection, { username, email });
+        return true;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
 
-    return userDocRef;
-  } catch (error) {
-    console.error("Error writing data to Firestore:", error);
-    return null;
-  }
+export const storeUsername = async username => {
+    try {
+        const usernamesRef = collection(firestoreDB, "reserved_usernames");
+        await addDoc(usernamesRef, { username });
+    } catch (error) {
+        throw new Error(error);
+    }
 };

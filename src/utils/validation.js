@@ -22,6 +22,11 @@ export const validateUsername = username => {
     response.message = "Username must be between 3 and 22 characters.";
   }
 
+  if (!username || username === '') {
+    response.isValid = false;
+    response.message = "Username is required.";
+  }
+
   return response;
 };
 

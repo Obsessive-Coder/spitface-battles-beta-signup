@@ -9,22 +9,18 @@ const defaultAlertConfig = {
     isOpen: false,
     isConfirm: true,
     message: '',
-    username: '',
-    email: '',
 };
 
 function MainPageContent() {
     const navigate = useNavigate();
     const [alertConfig, setAlertConfig] = useState({ ...defaultAlertConfig });
 
-    const showAlert = (username, email, message = '', isConfirm = false) => {
-        if (username && email) {
+    const showAlert = (message = '', isConfirm = false) => {
+        if (message) {
             setAlertConfig({
                 isOpen: true,
                 isConfirm,
                 message,
-                username,
-                email,
             });
         }
         

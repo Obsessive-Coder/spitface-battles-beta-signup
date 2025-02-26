@@ -1,5 +1,3 @@
-// import './utils/amplifyConfig';
-
 import { Route, Routes } from 'react-router-dom';
 
 // Bootstrap Components.

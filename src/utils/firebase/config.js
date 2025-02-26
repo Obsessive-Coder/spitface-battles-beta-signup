@@ -1,16 +1,5 @@
 import { initializeApp } from "firebase/app";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC_EenzD-3AUvr0w-c_SUq7-1KG6JkOCUY",
-//   authDomain: "spitface-battles-beta-si-406cc.firebaseapp.com",
-//   projectId: "spitface-battles-beta-si-406cc",
-//   storageBucket: "spitface-battles-beta-si-406cc.firebasestorage.app",
-//   messagingSenderId: "574634506220",
-//   appId: "1:574634506220:web:60b0df229b922d5dd7b2c9"
-// };
+import { getFirestore } from "firebase/firestore"; 
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,6 +11,8 @@ const firebaseConfig = {
 };
 
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
+export const firestoreDB = getFirestore(firebaseApp);
 
-export default firebaseApp;
+const defaultExport = { firebaseApp, firestoreDB };
+export default defaultExport
