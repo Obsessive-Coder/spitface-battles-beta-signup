@@ -48,5 +48,10 @@ export const validateEmail = email => {
     response.message = "Email must be between 5 and 100 characters.";
   }
 
+  if (!email || email === '') {
+    response.isValid = false;
+    response.message = "Email is required.";
+  }
+
   return response;
 };

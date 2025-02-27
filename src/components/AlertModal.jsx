@@ -80,7 +80,6 @@ export default function AlertModal({ alertConfig = {}, confirmButtonProps = {}, 
                   onChange={handleVerificationCodeChange}
                   inputProps={{
                     id: 'verification-code',
-                    autoComplete: false,
                     required: true,
                     inputMode: 'numeric',
                     value: verificationCode,

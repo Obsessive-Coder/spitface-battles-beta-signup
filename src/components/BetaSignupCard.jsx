@@ -9,53 +9,63 @@ import { validateEmail, validateUsername } from '../utils';
 import { createUser } from '../utils/firebase/auth';
 import { checkUsernameAvailability, storeUsername } from '../utils/firebase/firestore';
 
+const defaultFormData = {
+  username: {
+    value: '',
+    isValid: false,
+    isTouched: false,
+    message: 'Username is required.'
+  },
+  email: {
+    value: '',
+    isValid: false,
+    isTouched: false,
+    message: 'Email is required.'
+  }
+};
+
 const BetaSignupCard = ({ showAlert }) => {
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState();
   const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [formData, setFormData] = useState({ ...defaultFormData });
+  
+  const {
+    username: { value: usernameValue, isValid: isUsernameValid, isTouched: isUsernameTouched, message: usernameErrorMessage },
+    email: { value: emailValue, isValid: isEmailValid, isTouched: isEmailTouched, message: emailErrorMessage }
+  } = formData;
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-  });
-
-  const [validation, setValidation] = useState({
-    username: { isValid: true, message: '' },
-    email: { isValid: true, message: '' },
-  });
+  const isFormValid = isUsernameValid && isEmailValid;
 
   const handleValidateUsername = () => {
-    const usernameValidation = validateUsername(formData.username);
-    setValidation({
-      ...validation,
-      username: { ...usernameValidation }
-    });
+    const usernameValidation = validateUsername(usernameValue);
+    return { ...formData.username, ...usernameValidation, isTouched: isUsernameTouched };
   };
 
   const handleValidateEmail = () => {
-    const emailValidation = validateEmail(formData.email);
-    setValidation({
-      ...validation,
-      email: { ...emailValidation }
-    });
+    const emailValidation = validateEmail(emailValue);
+    return { ...formData.email, ...emailValidation, isTouched: isEmailTouched };
   };
 
   const handleAddUser = debounce(async () => {
     try {
-      const { email, username } = formData;
-      const isUsernameAvailable = await checkUsernameAvailability(username);
+      const {
+        username: { value: usernameValue},
+        email: { value: emailValue }
+      } = formData;
+
+      const isUsernameAvailable = await checkUsernameAvailability(usernameValue);
       
       if (isUsernameAvailable) {
-        const { uid: userId } = await createUser(username, email, 'Password1!');
-        await storeUsername(userId, username);
-        showAlert(`Hi ${username}, We've sent a verification link to ${email}. Please check your inbox and click the link to confirm your account.`, false);
+        const { uid: userId } = await createUser(usernameValue, emailValue, 'Password1!');
+        await storeUsername(userId, usernameValue);
+        showAlert(`Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`, false);
       }
-    } catch ({ code = '', message = '' }) {
+    } catch ({ code = '', cause, message = '', ...rest }) {
       let alertMessage = 'Unknown error please try again.';
 
       if (code === 'auth/email-already-in-use') {
         alertMessage = 'The provided email address is already in use.';
-      } else if (code === 'custom/username-already-in-use') {
+      } else if (cause.code === 'custom/username-already-in-use') {
         alertMessage = 'The provided username is already in use.';
       } else {
         alertMessage = message || 'There was an error creating your account. Please try again soon. If the problem persists, please contact us at support@spitfacebattles.com';
@@ -67,41 +77,50 @@ const BetaSignupCard = ({ showAlert }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    let validation;
 
-    // Reset validation feedback when user starts editing
-    // setValidation({ ...validation, [name]: { isValid: true, message: '' } });
+    if (name === 'username') {
+      validation = handleValidateUsername();
+    } else if (name === 'email') {
+      validation = handleValidateEmail();
+    }
+
+    setFormData({ ...formData, [name]: { ...formData[name], ...validation, value }});
   };
 
-  const handleSubmit = (e) => {
+  const handleBur = event => {
+    const { name } = event.target;
+    let validation = {};
+
+    if (name === 'username') {
+      validation = handleValidateUsername();
+    } else if (name === 'email') {
+      validation = handleValidateEmail();
+    }
+    
+    setFormData({ ...formData, [name]: { ...formData[name], ...validation, isTouched: true }});
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
-    // Perform final validation checks
-    handleValidateUsername();
-    handleValidateEmail();
+    const { isValid: isUsernameValid } = handleValidateUsername();
+    const { isValid: isEmailValid } = handleValidateEmail();
 
-    // If either field is invalid, prevent form submission
-    if (!validation.username.isValid || !validation.email.isValid) {
+    if (isUsernameValid && isEmailValid) {
+      document.getElementById('submit').focus();
+      await handleAddUser();
+      setFormData({ ...defaultFormData });
       setLoading(false);
-      console.log('Form submission blocked due to validation errors.');
-      return;
+      setRefreshReCaptcha(r => !r);
     }
-
-    // Proceed with form submission if both fields are valid
-    handleAddUser();
-    setLoading(false);
-    setFormData({ username: '', email: ''});
-    setRefreshReCaptcha(r => !r);
   };
 
   const onVerify = useCallback((token) => {
-    // setToken(token);
-    // console.log(token)
+    setRefreshReCaptcha(token);
   });
-
-  const isFormValid = validation.username.isValid && validation.email.isValid;
 
   return (
     <Card className="rounded-0 border-0 bg-darkest secondary-card">
@@ -123,14 +142,14 @@ const BetaSignupCard = ({ showAlert }) => {
               name="username"
               id="username"
               placeholder="Enter username"
-              value={formData.username}
-              invalid={!validation.username.isValid}
-              onBlur={handleValidateUsername}
+              value={usernameValue}
+              invalid={isUsernameTouched && !isUsernameValid}
+              onBlur={handleBur}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />
             <Label for="username" className="text-secondary beta-form-label">Username</Label>
-            <FormFeedback>{validation.username.message}</FormFeedback>
+            <FormFeedback>{usernameErrorMessage}</FormFeedback>
           </FormGroup>
 
           <FormGroup floating>
@@ -141,14 +160,14 @@ const BetaSignupCard = ({ showAlert }) => {
               name="email"
               id="email"
               placeholder="Enter email"
-              value={formData.email}
-              invalid={!validation.email.isValid}
-              onBlur={handleValidateEmail}
+              value={emailValue}
+              invalid={isEmailTouched && !isEmailValid}
+              onBlur={handleBur}
               onChange={handleChange}
               className="text-light bg-darker border-dark"
             />
             <Label for="email" className="text-secondary beta-form-label">Email</Label>
-            <FormFeedback>{validation.email.message}</FormFeedback>
+            <FormFeedback>{emailErrorMessage}</FormFeedback>
           </FormGroup>
 
           <FormGroup>
@@ -159,9 +178,10 @@ const BetaSignupCard = ({ showAlert }) => {
 
           <Button
             block
+            id="submit"
             type="submit"
             size="sm"
-            disabled={loading}
+            disabled={loading || !isFormValid}
             className="text-bg-darkest btn-outline-primary"
           >
             {loading ? 'Submitting...' : 'Submit'}

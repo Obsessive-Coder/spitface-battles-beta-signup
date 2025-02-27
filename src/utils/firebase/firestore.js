@@ -13,7 +13,7 @@ export const checkUsernameAvailability = async username => {
 
         return true;
     } catch (error) {
-        throw new Error(error);
+        throw new Error(error.message, { cause: { ...error.cause }});
     }
 };
 
