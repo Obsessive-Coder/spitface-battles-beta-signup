@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
-import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
@@ -25,8 +25,8 @@ const defaultFormData = {
 };
 
 const BetaSignupCard = ({ showAlert }) => {
+  const recaptchaRef = useRef(null);
   const [loading, setLoading] = useState(false);
-  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
   const [formData, setFormData] = useState({ ...defaultFormData });
   
   const {
@@ -104,6 +104,10 @@ const BetaSignupCard = ({ showAlert }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!recaptchaRef.current.getValue()){
+      return showAlert('Please Submit Captcha');
+    }
+
     setLoading(true);
 
     const { isValid: isUsernameValid } = handleValidateUsername();
@@ -114,13 +118,8 @@ const BetaSignupCard = ({ showAlert }) => {
       await handleAddUser();
       setFormData({ ...defaultFormData });
       setLoading(false);
-      setRefreshReCaptcha(r => !r);
     }
   };
-
-  const onVerify = useCallback((token) => {
-    setRefreshReCaptcha(token);
-  });
 
   return (
     <Card className="rounded-0 border-0 bg-darkest secondary-card">
@@ -170,10 +169,13 @@ const BetaSignupCard = ({ showAlert }) => {
             <FormFeedback>{emailErrorMessage}</FormFeedback>
           </FormGroup>
 
-          <FormGroup>
-            <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}>
-              <GoogleReCaptcha onVerify={onVerify} />
-            </GoogleReCaptchaProvider>
+          
+
+          <FormGroup className="d-flex justify-content-center">
+            <ReCAPTCHA 
+              theme="dark"
+              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
+            />
           </FormGroup>
 
           <Button
