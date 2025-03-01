@@ -37,7 +37,7 @@ const icons = [{
 
 function BetaTrailer() {
   return (
-    <Card className="flex-grow-1 rounded-0 border-0 bg-darkest ms-5 secondary-card">
+    <Card className="flex-grow-1 rounded-0 border-0 bg-darkest ms-lg-5 secondary-card">
       <CardHeader className="d-flex justify-content-around text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
         {icons.map(({ icon, color, url }, index) => (
           <a

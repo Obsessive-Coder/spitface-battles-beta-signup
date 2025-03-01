@@ -49,7 +49,7 @@ function MainPageContent() {
             <div className="card-container">
                 <BetaCountDownCard />
                 
-                <Container className='d-flex justify-content-between my-3 p-0'>
+                <Container className='d-flex flex-column flex-lg-row align-items-center align-items-lg-stretch justify-content-between my-3 p-0'>
                     <BetaSignupCard showAlert={showAlert} />
                     <BetaTrailer />
                 </Container>
