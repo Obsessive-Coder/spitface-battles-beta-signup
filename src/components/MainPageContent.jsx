@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Bootstrap Components.
+import { Container } from 'reactstrap';
+
 import AlertModal from './AlertModal';
 import BetaCountDownCard from './BetaCountDownCard';
 import BetaSignupCard from './BetaSignupCard';
+import BetaTrailer from './BetaTrailer';
 
 const defaultAlertConfig = {
     isOpen: false,
@@ -44,7 +48,11 @@ function MainPageContent() {
 
             <div className="card-container">
                 <BetaCountDownCard />
-                <BetaSignupCard showAlert={showAlert} />
+                
+                <Container className='d-flex justify-content-between my-3 p-0'>
+                    <BetaSignupCard showAlert={showAlert} />
+                    <BetaTrailer />
+                </Container>
             </div>
         </div>
     )

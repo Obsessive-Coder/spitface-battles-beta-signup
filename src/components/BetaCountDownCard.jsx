@@ -13,10 +13,10 @@ import { Button, Card, CardBody, CardHeader, CardFooter, CardTitle, CardText } f
 function BetaCountDownCard() {
 
   return (
-    <Card className="rounded-0 border-0 bg-darkest text-secondary main-card">
+    <Card className="rounded-0 border-0 bg-darkest text-secondary my-3 p-0 container main-card">
       <CardHeader className="bg-darkest rounded-0 border-primary-orange d-flex justify-content-between align-items-center">
-        <div className='flex-grow-1 flex-basis-0' style={{lineHeight: '17px'}}>
-          <p className='text-center m-0 fw-bold fs-4'>Beta<br/>Launch</p>
+        <div className='flex-grow-1 flex-basis-0'>
+          <p className='m-0 fw-bold fs-4 lh-1'>Beta<br/>Launch</p>
         </div>
 
         <div className='flex-fill'>
@@ -40,7 +40,7 @@ function BetaCountDownCard() {
         </div>
       </CardHeader>
 
-      <CardBody className="text-bg-darkest rounded-0 py-0">
+      <CardBody className="text-bg-darkest rounded-0 py-3">
         <CardText className="fs-2 text-center text-uppercase fst-italic">
           The stage is yours!
         </CardText>
@@ -55,12 +55,12 @@ function BetaCountDownCard() {
         />
       </CardBody>
 
-      <CardFooter className="d-flex text-bg-darkest border-0">
-        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1'>Your Stage</div>
-
-        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1 mx-2'>Your Skills</div>
-
-        <div className='flex-grow-1 flex-basis-0 text-center border border-primary-orange rounded-pill pb-1'>Your Voice</div>
+      <CardFooter className="d-flex text-bg-darkest border-0 rounded-0 py-3">
+        {['Your Voice', 'Your Skills', 'Your Stage'].map(item => (
+          <span key={`copy-${item}`} className='flex-grow-1 flex-basis-0 fs-4 text-center border border-primary-orange rounded-pill p-2 mx-3'>
+            {item}
+          </span>
+        ))}
       </CardFooter>
     </Card>
   )
