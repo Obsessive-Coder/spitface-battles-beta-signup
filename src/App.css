@@ -198,7 +198,12 @@
   }
 }
 
-
+.gradient-icon {
+  background: linear-gradient(to right, #007bff, #6610f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
 // Font Awesome icons.
-import { faFacebook, faTwitter, faYoutube, faDiscord, faInstagram  } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faYoutube, faDiscord, faInstagram, faXTwitter, faSquareXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ReactPlayer from 'react-player/youtube'
@@ -14,24 +14,24 @@ import ReactPlayer from 'react-player/youtube'
 // faFacebook, faTwitter, faYoutube, faDiscord, faInstagram
 const icons = [{
   icon: faFacebook,
-  color: 'blue',
-  url: 'facebook.com'
+  color: '#1877F2',
+  url: 'https://www.facebook.com/people/Spitface-Battles/61573456003674/'
 }, {
-  icon: faTwitter,
-  color: 'lightblue',
-  url: 'x.com',
+  icon: faXTwitter,
+  color: '#000000',
+  url: 'https://x.com/SpitfaceBattles/',
 }, {
   icon: faYoutube,
-  color: 'red',
-  url: 'youtube.com'
+  color: '#FF0000',
+  url: 'https://www.youtube.com/@SpitfaceBattles/'
 }, {
   icon: faDiscord,
-  color: 'purple',
-  url: 'discord.com'
+  color: '#7289da',
+  url: 'https://discord.gg/fWbgkhHvkQ/'
 }, {
   icon: faInstagram,
   color: 'pink',
-  url: 'instagram.com'
+  url: 'https://www.instagram.com/spitface.battles/'
 }];
 
 
@@ -40,13 +40,15 @@ function BetaTrailer() {
     <Card className="flex-grow-1 rounded-0 border-0 bg-darkest ms-5 secondary-card">
       <CardHeader className="d-flex justify-content-around text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
         {icons.map(({ icon, color, url }, index) => (
-          <Link
+          <a
             key={`social-icon-${color}-${index}`}
-            to={url}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="d-inline-block text-decoration-none text-secondary"
           >
-            <FontAwesomeIcon icon={icon} size="3x" />
-          </Link>
+            <FontAwesomeIcon icon={icon} size="3x" style={{ color }} />
+          </a>
         ))}
       </CardHeader>
 
