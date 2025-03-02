@@ -1,5 +1,5 @@
 import { firestoreDB } from "./config";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { collection, doc, query, where, getDocs, getCountFromServer, setDoc } from "firebase/firestore";
 
 export const checkUsernameAvailability = async username => {
     try {
@@ -21,9 +21,19 @@ export const storeUsername = async (userId, username) => {
     if (!userId || !username) return;
     
     try {
-        const usernamesRef = collection(firestoreDB, "reserved_usernames");
-        await addDoc(usernamesRef, { userId, username });
+        const userRef = doc(firestoreDB, "reserved_usernames", userId);
+        await setDoc(userRef, { username });
     } catch (error) {
         throw new Error(error);
+    }
+};
+
+export const getUsersCount = async () => {
+    try {
+        const usernamesRef = collection(firestoreDB, 'reserved_usernames');
+        const usernamesSnapshot = await getCountFromServer(usernamesRef);
+        return usernamesSnapshot.data().count;
+    } catch (error) {
+        
     }
 };

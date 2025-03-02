@@ -8,9 +8,9 @@ import { faHandHoldingUsd, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Bootstrap Components.
-import { Button, Card, CardBody, CardHeader, CardFooter, CardTitle, CardText } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardFooter, CardTitle, CardText } from 'reactstrap';
 
-function BetaCountDownCard() {
+function BetaCountDownCard({ usersCount = 0}) {
 
   return (
     <Card className="rounded-0 border-0 bg-darkest text-secondary my-3 p-0 container main-card">
@@ -27,22 +27,16 @@ function BetaCountDownCard() {
           </CardTitle>
         </div>
 
-        <div className='d-flex flex-column justify-content-between align-self-stretch flex-grow-1 flex-basis-0 text-end'>
-          <div className='d-flex justify-content-end'>
-            <FontAwesomeIcon icon={faHandHoldingUsd} size="lg" className='mx-2' />
-            <small className='fw-bold'>8888</small>
-          </div>
-
-          <div className='d-flex justify-content-end'>
-            <FontAwesomeIcon icon={faUsers} size="lg" className='mx-2' />
-            <small className='fw-bold'>8888</small>
-          </div>
+        <div className='flex-grow-1 flex-basis-0 text-end'>
+            <FontAwesomeIcon icon={faUsers} size="2x" className='mx-3' />
+            <small className='fw-bold' style={{ fontSize: '2em' }}>{usersCount}</small>
         </div>
       </CardHeader>
 
       <CardBody className="text-bg-darkest rounded-0 py-3">
-        <CardText className="fs-2 text-center text-uppercase fst-italic">
-          The stage is yours!
+        <CardText className="text-center text-uppercase fst-italic">
+          <span className="fs-2">The stage is yours!</span>
+          <small className="d-block fs-4 fw-bold">May 1, 2025</small>
         </CardText>
 
         <FlipClockCountdown

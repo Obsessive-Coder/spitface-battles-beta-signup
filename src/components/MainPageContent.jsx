@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Bootstrap Components.
@@ -8,6 +8,7 @@ import AlertModal from './AlertModal';
 import BetaCountDownCard from './BetaCountDownCard';
 import BetaSignupCard from './BetaSignupCard';
 import BetaTrailer from './BetaTrailer';
+import { getUsersCount } from '../utils/firebase/firestore';
 
 const defaultAlertConfig = {
     isOpen: false,
@@ -18,6 +19,7 @@ const defaultAlertConfig = {
 function MainPageContent() {
     const navigate = useNavigate();
     const [alertConfig, setAlertConfig] = useState({ ...defaultAlertConfig });
+    const [usersCount, setUsersCount] = useState(0);
 
     const showAlert = (message = '', isConfirm = false) => {
         if (message) {
@@ -38,6 +40,19 @@ function MainPageContent() {
         navigate('/verified');
     };
 
+    const updateUsersCount = async () => {
+        try {
+            setUsersCount(await getUsersCount());
+        } catch (error) {
+            console.log('ERROR: Unable to retrieve users count.');
+        }
+    };
+
+    useEffect(() => {
+      updateUsersCount();
+    }, [usersCount])
+    
+
     return (
         <div>
             <AlertModal
@@ -47,10 +62,10 @@ function MainPageContent() {
             />
 
             <div className="card-container">
-                <BetaCountDownCard />
+                <BetaCountDownCard usersCount={usersCount} />
                 
                 <Container className='d-flex flex-column flex-lg-row align-items-center align-items-lg-stretch justify-content-between my-3 p-0'>
-                    <BetaSignupCard showAlert={showAlert} />
+                    <BetaSignupCard showAlert={showAlert} updateUsersCount={updateUsersCount} />
                     <BetaTrailer />
                 </Container>
             </div>

@@ -24,7 +24,7 @@ const defaultFormData = {
   }
 };
 
-const BetaSignupCard = ({ showAlert }) => {
+const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   const recaptchaRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ ...defaultFormData });
@@ -58,6 +58,7 @@ const BetaSignupCard = ({ showAlert }) => {
       if (isUsernameAvailable) {
         const { uid: userId } = await createUser(usernameValue, emailValue, 'Password1!');
         await storeUsername(userId, usernameValue);
+        updateUsersCount();
         showAlert(`Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`, false);
       }
     } catch ({ code = '', cause, message = '', ...rest }) {
@@ -65,7 +66,7 @@ const BetaSignupCard = ({ showAlert }) => {
 
       if (code === 'auth/email-already-in-use') {
         alertMessage = 'The provided email address is already in use.';
-      } else if (cause.code === 'custom/username-already-in-use') {
+      } else if (cause?.code === 'custom/username-already-in-use') {
         alertMessage = 'The provided username is already in use.';
       } else {
         alertMessage = message || 'There was an error creating your account. Please try again soon. If the problem persists, please contact us at support@spitfacebattles.com';
