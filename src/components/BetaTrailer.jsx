@@ -27,7 +27,7 @@ const icons = [{
 }, {
   icon: faDiscord,
   color: '#7289da',
-  url: 'https://discord.gg/fWbgkhHvkQ/'
+  url: 'https://discord.gg/fWbgkhHvkQ'
 }, {
   icon: faInstagram,
   color: 'pink',

@@ -122,7 +122,7 @@ const BetaSignupCard = ({ showAlert }) => {
   };
 
   return (
-    <Card className="rounded-0 border-0 bg-darkest secondary-card">
+    <Card className="rounded-0 border-0 bg-darkest order-1 order-lg-0 secondary-card">
       <CardHeader className="text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
         <CardTitle className="text-center fs-2 fw-bold m-0">Beta Signup</CardTitle>
       </CardHeader>
