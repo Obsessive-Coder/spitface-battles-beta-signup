@@ -1,9 +1,10 @@
-import { validateEmail, validateUsername } from './validation';
+import { validateEmail, validateUsername, validatePassword } from './validation';
 
 export { validateUsername };
 export { validateEmail };
+export { validatePassword };
 
-export const validation = { validateEmail, validateUsername };
+export const validation = { validateEmail, validateUsername, validatePassword };
 
 const defaultExport = { validation };
 

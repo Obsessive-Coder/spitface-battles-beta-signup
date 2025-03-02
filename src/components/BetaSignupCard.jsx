@@ -5,7 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
-import { validateEmail, validateUsername } from '../utils';
+import { validateEmail, validateUsername, validatePassword } from '../utils';
 import { createUser } from '../utils/firebase/auth';
 import { checkUsernameAvailability, storeUsername } from '../utils/firebase/firestore';
 
@@ -21,20 +21,35 @@ const defaultFormData = {
     isValid: false,
     isTouched: false,
     message: 'Email is required.'
+  },
+  password: {
+    value: '',
+    isValid: false,
+    isTouched: false,
+    message: 'Password is required.'
+  },
+  confirmPassword: {
+    value: '',
+    isValid: false,
+    isTouched: false,
+    message: 'Confirm password is required.'
   }
 };
 
 const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   const recaptchaRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [formStep, setFormStep] = useState(0);
   const [formData, setFormData] = useState({ ...defaultFormData });
   
   const {
     username: { value: usernameValue, isValid: isUsernameValid, isTouched: isUsernameTouched, message: usernameErrorMessage },
-    email: { value: emailValue, isValid: isEmailValid, isTouched: isEmailTouched, message: emailErrorMessage }
+    email: { value: emailValue, isValid: isEmailValid, isTouched: isEmailTouched, message: emailErrorMessage },
+    password: { value: passwordValue, isValid: isPasswordValid, isTouched: isPasswordTouched, message: passwordErrorMessage },
+    confirmPassword: { value: confirmPasswordValue, isValid: isConfirmPasswordValid, isTouched: isConfirmPasswordTouched, message: confirmPasswordErrorMessage }
   } = formData;
 
-  const isFormValid = isUsernameValid && isEmailValid;
+  const isFormValid = formStep === 0 ? isUsernameValid && isEmailValid : isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
   const handleValidateUsername = () => {
     const usernameValidation = validateUsername(usernameValue);
@@ -44,6 +59,16 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   const handleValidateEmail = () => {
     const emailValidation = validateEmail(emailValue);
     return { ...formData.email, ...emailValidation, isTouched: isEmailTouched };
+  };
+
+  const handleValidatePassword = () => {
+    const passwordValidation = validatePassword(passwordValue);
+    return { ...formData.password, ...passwordValidation, isTouched: isPasswordTouched };
+  };
+
+  const handleValidatePasswordConfirm = () => {
+    const passwordValidation = validatePassword(passwordValue, confirmPasswordValue);
+    return { ...formData.confirmPassword, ...passwordValidation, isTouched: isConfirmPasswordTouched };
   };
 
   const handleAddUser = debounce(async () => {
@@ -84,6 +109,10 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
       validation = handleValidateUsername();
     } else if (name === 'email') {
       validation = handleValidateEmail();
+    } else if (name === 'password') {
+      validation = handleValidatePassword();
+    } else if (name === 'confirmPassword') { 
+      validation = handleValidatePasswordConfirm();
     }
 
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, value }});
@@ -97,9 +126,20 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
       validation = handleValidateUsername();
     } else if (name === 'email') {
       validation = handleValidateEmail();
+    } else if (name === 'password') {
+      validation = handleValidatePassword();
+    } else if (name === 'confirmPassword') { 
+      validation = handleValidatePasswordConfirm();
     }
     
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, isTouched: true }});
+  };
+
+  const handleFormNextPrevClick = (event) => {
+    event.preventDefault();
+    const buttonId = event.currentTarget.getAttribute('id');
+    const updatedFormStep = buttonId === 'previous' ? formStep - 1 : formStep + 1;
+    setFormStep(updatedFormStep);
   };
 
   const handleSubmit = async (e) => {
@@ -134,61 +174,122 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
         </CardText>
 
         <Form noValidate id="signup-form" onSubmit={handleSubmit}>
-          <FormGroup floating>
-            <Input
-              required
-              bsSize='sm'
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Enter username"
-              value={usernameValue}
-              invalid={isUsernameTouched && !isUsernameValid}
-              onBlur={handleBur}
-              onChange={handleChange}
-              className="text-light bg-darker border-dark"
-            />
-            <Label for="username" className="text-secondary beta-form-label">Username</Label>
-            <FormFeedback>{usernameErrorMessage}</FormFeedback>
-          </FormGroup>
+          {formStep === 0 && (
+            <>
+              <FormGroup floating>
+                <Input
+                  required
+                  bsSize='sm'
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Enter username"
+                  value={usernameValue}
+                  invalid={isUsernameTouched && !isUsernameValid}
+                  onBlur={handleBur}
+                  onChange={handleChange}
+                  className="text-light bg-darker border-dark"
+                />
+                <Label for="username" className="text-secondary beta-form-label">Username</Label>
+                <FormFeedback>{usernameErrorMessage}</FormFeedback>
+              </FormGroup>
 
-          <FormGroup floating>
-            <Input
-              required
-              bsSize='sm'
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter email"
-              value={emailValue}
-              invalid={isEmailTouched && !isEmailValid}
-              onBlur={handleBur}
-              onChange={handleChange}
-              className="text-light bg-darker border-dark"
-            />
-            <Label for="email" className="text-secondary beta-form-label">Email</Label>
-            <FormFeedback>{emailErrorMessage}</FormFeedback>
-          </FormGroup>
+              <FormGroup floating>
+                <Input
+                  required
+                  bsSize='sm'
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={emailValue}
+                  invalid={isEmailTouched && !isEmailValid}
+                  onBlur={handleBur}
+                  onChange={handleChange}
+                  className="text-light bg-darker border-dark"
+                />
+                <Label for="email" className="text-secondary beta-form-label">Email</Label>
+                <FormFeedback>{emailErrorMessage}</FormFeedback>
+              </FormGroup>
+            </>
+          )}
 
-          
+          {formStep === 1 && (
+            <>
+              <FormGroup floating>
+                <Input
+                  required
+                  bsSize='sm'
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter password"
+                  value={passwordValue}
+                  invalid={isPasswordTouched && !isPasswordValid}
+                  onBlur={handleBur}
+                  onChange={handleChange}
+                  className="text-light bg-darker border-dark"
+                />
+                <Label for="password" className="text-secondary beta-form-label">Password</Label>
+                <FormFeedback>{passwordErrorMessage}</FormFeedback>
+              </FormGroup>
 
-          <FormGroup className="d-flex justify-content-center">
-            <ReCAPTCHA 
-              theme="dark"
-              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
-            />
-          </FormGroup>
+              <FormGroup floating>
+                <Input
+                  required
+                  bsSize='sm'
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="Confirm password"
+                  value={confirmPasswordValue}
+                  invalid={isConfirmPasswordTouched && !isConfirmPasswordValid}
+                  onBlur={handleBur}
+                  onChange={handleChange}
+                  className="text-light bg-darker border-dark"
+                />
+                <Label for="confirmPassword" className="text-secondary beta-form-label">Confirm Password</Label>
+                <FormFeedback>{confirmPasswordErrorMessage}</FormFeedback>
+              </FormGroup>
+            </>
+          )}          
 
-          <Button
-            block
-            id="submit"
-            type="submit"
-            size="sm"
-            disabled={loading || !isFormValid}
-            className="text-bg-darkest btn-outline-primary"
-          >
-            {loading ? 'Submitting...' : 'Submit'}
-          </Button>
+          {formStep === 1 && (
+            <FormGroup className="d-flex justify-content-center">
+              <ReCAPTCHA 
+                theme="dark"
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
+              />
+            </FormGroup>
+          )}
+
+            <div className="d-flex">
+              <Button
+                block
+                id={formStep === 0 ? 'next' : 'previous'}
+                name={formStep === 0 ? 'next' : 'previous'}
+                type='button'
+                size="sm"
+                disabled={formStep === 0 && !isFormValid}
+                onClick={handleFormNextPrevClick}
+                className={`text-bg-darkest btn-outline-primary ${formStep > 0 && 'flex-basis-0 me-3'}`}
+              >
+                {formStep === 0 ? 'Next' : 'Previous'}
+              </Button>
+
+              {formStep === 1 && (
+                <Button
+                  block
+                  id="submit"
+                  type='submit'
+                  size="sm"
+                  disabled={loading || !isFormValid}
+                  className="flex-fill text-bg-darkest btn-outline-primary"
+                >
+                  {loading ? 'Submitting...' : 'Submit'}
+                </Button>
+              )}
+            </div>
         </Form>
       </CardBody>
     </Card>

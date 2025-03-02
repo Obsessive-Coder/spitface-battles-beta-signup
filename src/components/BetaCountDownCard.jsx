@@ -10,13 +10,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Bootstrap Components.
 import { Card, CardBody, CardHeader, CardFooter, CardTitle, CardText } from 'reactstrap';
 
+import SFB_Logo from '../images/SFB_Logo.png';
+
 function BetaCountDownCard({ usersCount = 0}) {
 
   return (
     <Card className="rounded-0 border-0 bg-darkest text-secondary my-3 p-0 container main-card">
       <CardHeader className="bg-darkest rounded-0 border-primary-orange d-flex justify-content-between align-items-center">
         <div className='flex-grow-1 flex-basis-0'>
-          <p className='m-0 fw-bold fs-4 lh-1'>Beta<br/>Launch</p>
+          {/* <p className='m-0 fw-bold fs-4 lh-1'>Beta<br/>Launch</p> */}
+          <img src={SFB_Logo} alt="Spitface Battles Logo" className="logo" />
         </div>
 
         <div className='flex-fill'>

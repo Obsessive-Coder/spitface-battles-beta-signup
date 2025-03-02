@@ -56,3 +56,37 @@ export const validateEmail = email => {
 
   return response;
 };
+
+export const validatePassword = (password, confirmPassword = null) => {
+
+  console.log("HERE: ", password, confirmPassword)
+  const response = { isValid: true, message: 'Valid password'};
+
+  const isConfirmPassword = confirmPassword !== null;
+  const passwordValidating = isConfirmPassword ? confirmPassword : password;
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,4096}$/;
+
+  // Check if password matches the general pattern.
+  if (!passwordRegex.test(passwordValidating)) {
+    response.isValid = false;
+    response.message = "Please enter a valid password";
+  }
+
+  if (passwordValidating.length < 8 || passwordValidating.length > 4096) {
+    response.isValid = false;
+    response.message = "Password must be between 8 and 4096 characters."
+  }
+
+  if (isConfirmPassword && confirmPassword !== password) {
+    response.isValid = false;
+    response.message = "Passwords do not match.";
+  }
+
+  if (!passwordValidating || passwordValidating === '') {
+    response.isValid = false;
+    response.message = `${isConfirmPassword && 'Confirm '}Password is required.`
+  }
+
+  return response;
+};
