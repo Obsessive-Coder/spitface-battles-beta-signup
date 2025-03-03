@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
 import ReCAPTCHA from "react-google-recaptcha";
@@ -51,23 +51,23 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
 
   const isFormValid = formStep === 0 ? isUsernameValid && isEmailValid : isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
-  const handleValidateUsername = () => {
-    const usernameValidation = validateUsername(usernameValue);
+  const handleValidateUsername = username => {
+    const usernameValidation = validateUsername(username);
     return { ...formData.username, ...usernameValidation, isTouched: isUsernameTouched };
   };
 
-  const handleValidateEmail = () => {
-    const emailValidation = validateEmail(emailValue);
+  const handleValidateEmail = email => {
+    const emailValidation = validateEmail(email);
     return { ...formData.email, ...emailValidation, isTouched: isEmailTouched };
   };
 
-  const handleValidatePassword = () => {
-    const passwordValidation = validatePassword(passwordValue);
+  const handleValidatePassword = password => {
+    const passwordValidation = validatePassword(password);
     return { ...formData.password, ...passwordValidation, isTouched: isPasswordTouched };
   };
 
-  const handleValidatePasswordConfirm = () => {
-    const passwordValidation = validatePassword(passwordValue, confirmPasswordValue);
+  const handleValidateConfirmPassword = (password, confirmPassword) => {
+    const passwordValidation = validatePassword(password, confirmPassword);
     return { ...formData.confirmPassword, ...passwordValidation, isTouched: isConfirmPasswordTouched };
   };
 
@@ -75,13 +75,14 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
     try {
       const {
         username: { value: usernameValue},
-        email: { value: emailValue }
+        email: { value: emailValue },
+        password: { value: passwordValue }
       } = formData;
 
       const isUsernameAvailable = await checkUsernameAvailability(usernameValue);
       
       if (isUsernameAvailable) {
-        const { uid: userId } = await createUser(usernameValue, emailValue, 'Password1!');
+        const { uid: userId } = await createUser(usernameValue, emailValue, passwordValue);
         await storeUsername(userId, usernameValue);
         updateUsersCount();
         showAlert(`Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`, false);
@@ -106,13 +107,13 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
     let validation;
 
     if (name === 'username') {
-      validation = handleValidateUsername();
+      validation = handleValidateUsername(value);
     } else if (name === 'email') {
-      validation = handleValidateEmail();
+      validation = handleValidateEmail(value);
     } else if (name === 'password') {
-      validation = handleValidatePassword();
+      validation = handleValidatePassword(value);
     } else if (name === 'confirmPassword') { 
-      validation = handleValidatePasswordConfirm();
+      validation = handleValidateConfirmPassword(passwordValue, value);
     }
 
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, value }});
@@ -123,13 +124,13 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
     let validation = {};
 
     if (name === 'username') {
-      validation = handleValidateUsername();
+      validation = handleValidateUsername(usernameValue);
     } else if (name === 'email') {
-      validation = handleValidateEmail();
+      validation = handleValidateEmail(emailValue);
     } else if (name === 'password') {
-      validation = handleValidatePassword();
+      validation = handleValidatePassword(passwordValue);
     } else if (name === 'confirmPassword') { 
-      validation = handleValidatePasswordConfirm();
+      validation = handleValidateConfirmPassword(passwordValue, confirmPasswordValue);
     }
     
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, isTouched: true }});
@@ -151,10 +152,12 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
 
     setLoading(true);
 
-    const { isValid: isUsernameValid } = handleValidateUsername();
-    const { isValid: isEmailValid } = handleValidateEmail();
+    const { isValid: isUsernameValid } = handleValidateUsername(usernameValue);
+    const { isValid: isEmailValid } = handleValidateEmail(usernameValue);
+    const { isValid: isPasswordValid } = handleValidatePassword(passwordValue);
+    const { isValid: isConfirmPasswordValid } = handleValidateConfirmPassword(passwordValue, confirmPasswordValue);
 
-    if (isUsernameValid && isEmailValid) {
+    if (isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
       document.getElementById('submit').focus();
       await handleAddUser();
       setFormData({ ...defaultFormData });
