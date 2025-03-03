@@ -56,26 +56,24 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
     confirmPassword: { value: confirmPasswordValue, isValid: isConfirmPasswordValid, isTouched: isConfirmPasswordTouched, message: confirmPasswordErrorMessage }
   } = formData;
 
-  const isTouchedData = {
-    username: isUsernameTouched,
-    email: isEmailTouched,
-    password: isPasswordTouched,
-    confirmPassword: isConfirmPasswordTouched
-  };
-
   const isFormValid = formStep === 0 ? isUsernameValid && isEmailValid : isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
   const handleValidation = (name, value) => {
     let validationFunction = validatorFunctions[name];
     const parameters = [...(name === 'confirmPassword') ? [passwordValue] : [], value];
     const validation = validationFunction(...parameters);
-    return { ...formData[name], ...validation, isTouched: isTouchedData[name] };
+    return { ...formData[name], ...validation, isTouched: formData[name].isTouched };
   }; 
 
   const handleAddUser = debounce(async () => {
     let alertMessage = 'Unknown error please try again.';
 
     try {
+      const {
+        username: { value: usernameValue },
+        email: { value: emailValue },
+        password: { value: passwordValue },
+      } = formData;
       setIsLoading(true);
       const isUsernameAvailable = await checkUsernameAvailability(usernameValue);
       
