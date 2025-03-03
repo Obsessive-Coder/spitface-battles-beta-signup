@@ -40,9 +40,9 @@ function MainPageContent() {
         navigate('/verified');
     };
 
-    const updateUsersCount = async () => {
+    const updateUsersCount = () => {
         try {
-            setUsersCount(await getUsersCount());
+            getUsersCount().then(updatedCount => setUsersCount(updatedCount));
         } catch (error) {
             console.log('ERROR: Unable to retrieve users count.');
         }

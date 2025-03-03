@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
 import ReCAPTCHA from "react-google-recaptcha";
@@ -45,7 +45,7 @@ const validatorFunctions = {
 
 const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   const recaptchaRef = useRef(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formStep, setFormStep] = useState(0);
   const [formData, setFormData] = useState({ ...defaultFormData });
   
@@ -56,42 +56,36 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
     confirmPassword: { value: confirmPasswordValue, isValid: isConfirmPasswordValid, isTouched: isConfirmPasswordTouched, message: confirmPasswordErrorMessage }
   } = formData;
 
+  const isTouchedData = {
+    username: isUsernameTouched,
+    email: isEmailTouched,
+    password: isPasswordTouched,
+    confirmPassword: isConfirmPasswordTouched
+  };
+
   const isFormValid = formStep === 0 ? isUsernameValid && isEmailValid : isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
   const handleValidation = (name, value) => {
     let validationFunction = validatorFunctions[name];
-
-    const isTouchedData = {
-      username: isUsernameTouched,
-      email: isEmailTouched,
-      password: isPasswordTouched,
-      confirmPassword: isConfirmPasswordTouched
-    };
-
     const parameters = [...(name === 'confirmPassword') ? [passwordValue] : [], value];
     const validation = validationFunction(...parameters);
     return { ...formData[name], ...validation, isTouched: isTouchedData[name] };
   }; 
 
   const handleAddUser = debounce(async () => {
-    try {
-      const {
-        username: { value: usernameValue},
-        email: { value: emailValue },
-        password: { value: passwordValue }
-      } = formData;
+    let alertMessage = 'Unknown error please try again.';
 
+    try {
+      setIsLoading(true);
       const isUsernameAvailable = await checkUsernameAvailability(usernameValue);
       
       if (isUsernameAvailable) {
         const { uid: userId } = await createUser(usernameValue, emailValue, passwordValue);
         await storeUsername(userId, usernameValue);
         updateUsersCount();
-        showAlert(`Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`, false);
+        alertMessage = `Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`;
       }
-    } catch ({ code = '', cause, message = '', ...rest }) {
-      let alertMessage = 'Unknown error please try again.';
-
+    } catch ({ code = '', cause, message = '' }) {
       if (code === 'auth/email-already-in-use') {
         alertMessage = 'The provided email address is already in use.';
       } else if (cause?.code === 'custom/username-already-in-use') {
@@ -99,49 +93,57 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
       } else {
         alertMessage = message || 'There was an error creating your account. Please try again soon. If the problem persists, please contact us at support@spitfacebattles.com';
       }
-
+    } finally {
+      setIsLoading(false);
       showAlert(alertMessage, false);
     }
   }, 300);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = ({ target: { name, value }}) => {
     const validation = handleValidation(name, value);
-    setFormData({ ...formData, [name]: { ...formData[name], ...validation, value }});
+    setFormData({
+      ...formData,
+      [name]: {
+        ...formData[name],
+        ...validation,
+        value
+      }});
   };
 
-  const handleBur = event => {
-    const { name, value } = event.target;    
+  const handleBur = ({ target: {name, value }}) => {
     const validation = handleValidation(name, value);
-    setFormData({ ...formData, [name]: { ...formData[name], ...validation, isTouched: true }});
+    setFormData({
+      ...formData,
+      [name]: {
+        ...formData[name],
+        ...validation,
+        isTouched: true
+      }});
   };
 
-  const handleFormNextPrevClick = (event) => {
+  const handleFormNextPrevClick = event => {
     event.preventDefault();
     const buttonId = event.currentTarget.getAttribute('id');
     const updatedFormStep = buttonId === 'previous' ? formStep - 1 : formStep + 1;
     setFormStep(updatedFormStep);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
 
     if(!recaptchaRef.current.getValue()){
-      return showAlert('Please Submit Captcha');
+      return showAlert('Please Submit Captcha.');
     }
 
-    setLoading(true);
+    const formFields = ['username', 'email', 'password', 'confirmPassword'];
+    const isFormValid = formFields.filter(name => !handleValidation(name, formData[name].value));
 
-    const { isValid: isUsernameValid } = handleValidation('username', usernameValue);
-    const { isValid: isEmailValid } = handleValidation('email', emailValue);
-    const { isValid: isPasswordValid } = handleValidation('password', passwordValue);
-    const { isValid: isConfirmPasswordValid } = handleValidation('confirmPassword', confirmPasswordValue);
-
-    if (isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+    if (isFormValid) {
       document.getElementById('submit').focus();
+      setIsLoading(true);
       await handleAddUser();
+      setIsLoading(false);
       setFormData({ ...defaultFormData });
-      setLoading(false);
     }
   };
 
@@ -234,16 +236,14 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                 <Label for="confirmPassword" className="text-secondary beta-form-label">Confirm Password</Label>
                 <FormFeedback>{confirmPasswordErrorMessage}</FormFeedback>
               </FormGroup>
-            </>
-          )}          
 
-          {formStep === 1 && (
-            <FormGroup className="d-flex justify-content-center">
-              <ReCAPTCHA 
-                theme="dark"
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
-              />
-            </FormGroup>
+              <FormGroup className="d-flex justify-content-center">
+                <ReCAPTCHA 
+                  theme="dark"
+                  sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
+                />
+              </FormGroup>
+            </>
           )}
 
             <div className="d-flex">
@@ -266,10 +266,10 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   id="submit"
                   type='submit'
                   size="sm"
-                  disabled={loading || !isFormValid}
+                  disabled={isLoading || !isFormValid}
                   className="flex-fill text-bg-darkest btn-outline-primary"
                 >
-                  {loading ? 'Submitting...' : 'Submit'}
+                  {isLoading ? 'Submitting...' : 'Submit'}
                 </Button>
               )}
             </div>
