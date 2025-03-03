@@ -36,6 +36,13 @@ const defaultFormData = {
   }
 };
 
+const validatorFunctions = {
+  username: validateUsername,
+  email: validateEmail,
+  password: validatePassword,
+  confirmPassword: validatePassword
+};
+
 const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   const recaptchaRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -51,25 +58,20 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
 
   const isFormValid = formStep === 0 ? isUsernameValid && isEmailValid : isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
-  const handleValidateUsername = username => {
-    const usernameValidation = validateUsername(username);
-    return { ...formData.username, ...usernameValidation, isTouched: isUsernameTouched };
-  };
+  const handleValidation = (name, value) => {
+    let validationFunction = validatorFunctions[name];
 
-  const handleValidateEmail = email => {
-    const emailValidation = validateEmail(email);
-    return { ...formData.email, ...emailValidation, isTouched: isEmailTouched };
-  };
+    const isTouchedData = {
+      username: isUsernameTouched,
+      email: isEmailTouched,
+      password: isPasswordTouched,
+      confirmPassword: isConfirmPasswordTouched
+    };
 
-  const handleValidatePassword = password => {
-    const passwordValidation = validatePassword(password);
-    return { ...formData.password, ...passwordValidation, isTouched: isPasswordTouched };
-  };
-
-  const handleValidateConfirmPassword = (password, confirmPassword) => {
-    const passwordValidation = validatePassword(password, confirmPassword);
-    return { ...formData.confirmPassword, ...passwordValidation, isTouched: isConfirmPasswordTouched };
-  };
+    const parameters = [...(name === 'confirmPassword') ? [passwordValue] : [], value];
+    const validation = validationFunction(...parameters);
+    return { ...formData[name], ...validation, isTouched: isTouchedData[name] };
+  }; 
 
   const handleAddUser = debounce(async () => {
     try {
@@ -104,35 +106,13 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let validation;
-
-    if (name === 'username') {
-      validation = handleValidateUsername(value);
-    } else if (name === 'email') {
-      validation = handleValidateEmail(value);
-    } else if (name === 'password') {
-      validation = handleValidatePassword(value);
-    } else if (name === 'confirmPassword') { 
-      validation = handleValidateConfirmPassword(passwordValue, value);
-    }
-
+    const validation = handleValidation(name, value);
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, value }});
   };
 
   const handleBur = event => {
-    const { name } = event.target;
-    let validation = {};
-
-    if (name === 'username') {
-      validation = handleValidateUsername(usernameValue);
-    } else if (name === 'email') {
-      validation = handleValidateEmail(emailValue);
-    } else if (name === 'password') {
-      validation = handleValidatePassword(passwordValue);
-    } else if (name === 'confirmPassword') { 
-      validation = handleValidateConfirmPassword(passwordValue, confirmPasswordValue);
-    }
-    
+    const { name, value } = event.target;    
+    const validation = handleValidation(name, value);
     setFormData({ ...formData, [name]: { ...formData[name], ...validation, isTouched: true }});
   };
 
@@ -152,10 +132,10 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
 
     setLoading(true);
 
-    const { isValid: isUsernameValid } = handleValidateUsername(usernameValue);
-    const { isValid: isEmailValid } = handleValidateEmail(usernameValue);
-    const { isValid: isPasswordValid } = handleValidatePassword(passwordValue);
-    const { isValid: isConfirmPasswordValid } = handleValidateConfirmPassword(passwordValue, confirmPasswordValue);
+    const { isValid: isUsernameValid } = handleValidation('username', usernameValue);
+    const { isValid: isEmailValid } = handleValidation('email', emailValue);
+    const { isValid: isPasswordValid } = handleValidation('password', passwordValue);
+    const { isValid: isConfirmPasswordValid } = handleValidation('confirmPassword', confirmPasswordValue);
 
     if (isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
       document.getElementById('submit').focus();
