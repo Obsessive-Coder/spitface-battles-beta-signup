@@ -7,7 +7,7 @@ import { Container } from 'reactstrap';
 import AlertModal from './AlertModal';
 import BetaCountDownCard from './BetaCountDownCard';
 import BetaSignupCard from './BetaSignupCard';
-import BetaTrailer from './BetaTrailer';
+import InfoCard from './InfoCard';
 import { getUsersCount } from '../utils/firebase/firestore';
 
 const defaultAlertConfig = {
@@ -64,9 +64,10 @@ function MainPageContent() {
             <div className="card-container">
                 <BetaCountDownCard usersCount={usersCount} />
                 
-                <Container className='d-flex flex-column flex-lg-row align-items-center align-items-lg-stretch justify-content-between my-3 p-0'>
+                <Container className='d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-between my-3 p-0'>
                     <BetaSignupCard showAlert={showAlert} updateUsersCount={updateUsersCount} />
-                    {/* <BetaTrailer /> */}
+                    
+                    <InfoCard />
                 </Container>
             </div>
         </div>

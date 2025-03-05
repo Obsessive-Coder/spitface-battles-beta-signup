@@ -44,12 +44,12 @@
 }
 
 .secondary-card {
-  width: 25rem;
+  /* width: 25rem; */
   /* left: 20px; */
   background: linear-gradient(145deg, #222, #000); 
   color: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7); 
-  margin-top: 1rem;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7); 
+  /* margin-top: 1rem; */
   /* transform: rotateX(50deg) rotateY(7deg) rotateZ(-17deg); 
   transform-origin: center center; */
 }
@@ -102,13 +102,14 @@
     --fcc-digit-block-width: 85px;
   }
 
-  .secondary-card {
-    /* left: -115px; */
-  }
-
   .beta-trailer {
     /* height: 420px !important; */
     font-size: 3rem;
+  }
+
+  .secondary-card {
+    /* left: -115px; */
+    width: 25rem;
   }
 }
 

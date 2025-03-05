@@ -146,17 +146,17 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   };
 
   return (
-    <Card className="rounded-0 border-0 bg-darkest order-1 order-lg-0 secondary-card">
+    <Card className="rounded-0 border-0 bg-darkest secondary-card">
       <CardHeader className="text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
-        <CardTitle className="text-center fs-2 fw-bold m-0">Beta Signup</CardTitle>
+        <CardTitle className="text-center fs-1 fw-bold m-0 londrina-outline-regular">Beta Signup</CardTitle>
       </CardHeader>
 
       <CardBody className="text-bg-darkest rounded-0">
-        <CardText className="text-center small">
-          Sign up to join our exclusive beta and experience the future of rap battles. Be among the first to build your reputation and connect with rivals worldwide.
+        <CardText className="text-center fw-bold annie-use-your-telescope-regular" style={{ letterSpacing: '1px' }}>
+          Secure your spot, build your rep, and run the mic.
         </CardText>
 
-        <Form noValidate id="signup-form" onSubmit={handleSubmit}>
+        <Form noValidate id="signup-form" onSubmit={handleSubmit} className='permanent-marker-regular'>
           {formStep === 0 && (
             <>
               <FormGroup floating>
@@ -171,7 +171,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   invalid={isUsernameTouched && !isUsernameValid}
                   onBlur={handleBur}
                   onChange={handleChange}
-                  className="text-light bg-darker border-dark"
+                  className="text-light text-light-emphasis bg-darker border-dark"
                 />
                 <Label for="username" className="text-secondary beta-form-label">Username</Label>
                 <FormFeedback>{usernameErrorMessage}</FormFeedback>
@@ -189,7 +189,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   invalid={isEmailTouched && !isEmailValid}
                   onBlur={handleBur}
                   onChange={handleChange}
-                  className="text-light bg-darker border-dark"
+                  className="text-light text-light-emphasis bg-darker border-dark"
                 />
                 <Label for="email" className="text-secondary beta-form-label">Email</Label>
                 <FormFeedback>{emailErrorMessage}</FormFeedback>
@@ -211,7 +211,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   invalid={isPasswordTouched && !isPasswordValid}
                   onBlur={handleBur}
                   onChange={handleChange}
-                  className="text-light bg-darker border-dark"
+                  className="text-light text-light-emphasis bg-darker border-dark"
                 />
                 <Label for="password" className="text-secondary beta-form-label">Password</Label>
                 <FormFeedback>{passwordErrorMessage}</FormFeedback>
@@ -229,7 +229,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   invalid={isConfirmPasswordTouched && !isConfirmPasswordValid}
                   onBlur={handleBur}
                   onChange={handleChange}
-                  className="text-light bg-darker border-dark"
+                  className="text-light text-light-emphasis bg-darker border-dark"
                 />
                 <Label for="confirmPassword" className="text-secondary beta-form-label">Confirm Password</Label>
                 <FormFeedback>{confirmPasswordErrorMessage}</FormFeedback>
