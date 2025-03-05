@@ -37,8 +37,8 @@ const icons = [{
 
 function BetaTrailer() {
   return (
-    <Card className="flex-grow-1 rounded-0 border-0 bg-darkest ms-lg-5 secondary-card">
-      <CardHeader className="d-flex justify-content-around text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
+    <Card className="rounded-0 border-0 bg-darkest my-2 mx-auto beta-trailer">
+      {/* <CardHeader className="d-flex justify-content-around text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
         {icons.map(({ icon, color, url }, index) => (
           <a
             key={`social-icon-${color}-${index}`}
@@ -50,7 +50,7 @@ function BetaTrailer() {
             <FontAwesomeIcon icon={icon} size="3x" style={{ color }} />
           </a>
         ))}
-      </CardHeader>
+      </CardHeader> */}
 
       <CardBody className="text-bg-darkest rounded-0 p-0">
         <ReactPlayer url='https://www.youtube.com/watch?v=yqWX86uT5jM' width="100%" height="100%" />

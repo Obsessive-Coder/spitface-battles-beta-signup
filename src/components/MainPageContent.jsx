@@ -66,7 +66,7 @@ function MainPageContent() {
                 
                 <Container className='d-flex flex-column flex-lg-row align-items-center align-items-lg-stretch justify-content-between my-3 p-0'>
                     <BetaSignupCard showAlert={showAlert} updateUsersCount={updateUsersCount} />
-                    <BetaTrailer />
+                    {/* <BetaTrailer /> */}
                 </Container>
             </div>
         </div>
