@@ -5,6 +5,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 
+import { motion, AnimatePresence } from 'motion/react';
+
 import { validateEmail, validateUsername, validatePassword } from '../utils';
 import { createUser } from '../utils/firebase/auth';
 import { checkUsernameAvailability, storeUsername } from '../utils/firebase/firestore';
@@ -148,101 +150,112 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   return (
     <Card className="rounded-0 border-0 bg-darkest secondary-card">
       <CardHeader className="text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
-        <CardTitle className="text-center fs-1 fw-bold m-0 text-primary-orange londrina-outline-regular">Beta Signup</CardTitle>
+        <CardTitle className="text-center fs-1 fw-bold m-0 text-primary-orange-emphasis londrina-outline-regular">Beta Signup</CardTitle>
       </CardHeader>
 
       <CardBody className="text-bg-darkest rounded-0">
-        <CardText className="text-center fw-bold annie-use-your-telescope-regular" style={{ letterSpacing: '1px' }}>
+        <CardText className="text-center fw-bold text-secondary annie-use-your-telescope-regular" style={{ letterSpacing: '1px' }}>
           Secure your spot, build your rep, and run the mic.
         </CardText>
 
+        <motion.div layout>
         <Form noValidate id="signup-form" onSubmit={handleSubmit} className='permanent-marker-regular'>
-          {formStep === 0 && (
-            <>
-              <FormGroup floating>
-                <Input
-                  required
-                  bsSize='sm'
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="Enter username"
-                  value={usernameValue}
-                  invalid={isUsernameTouched && !isUsernameValid}
-                  onBlur={handleBur}
-                  onChange={handleChange}
-                  className="text-light text-light-emphasis bg-darker border-dark"
-                />
-                <Label for="username" className="text-secondary beta-form-label">Username</Label>
-                <FormFeedback>{usernameErrorMessage}</FormFeedback>
-              </FormGroup>
+          <AnimatePresence mode="wait">
+            {formStep === 0 && (
+              <motion.div initial="hidden" animate="visible" exit="hidden">
+                <FormGroup floating>
+                  <Input
+                    required
+                    bsSize='sm'
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter username"
+                    value={usernameValue}
+                    invalid={isUsernameTouched && !isUsernameValid}
+                    onBlur={handleBur}
+                    onChange={handleChange}
+                    style={{ letterSpacing: '5px' }}
+                    className="text-light text-light-emphasis bg-darker border-dark"
+                  />
+                  <Label for="username" className="text-secondary beta-form-label">Username</Label>
+                  <FormFeedback>{usernameErrorMessage}</FormFeedback>
+                </FormGroup>
 
-              <FormGroup floating>
-                <Input
-                  required
-                  bsSize='sm'
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Enter email"
-                  value={emailValue}
-                  invalid={isEmailTouched && !isEmailValid}
-                  onBlur={handleBur}
-                  onChange={handleChange}
-                  className="text-light text-light-emphasis bg-darker border-dark"
-                />
-                <Label for="email" className="text-secondary beta-form-label">Email</Label>
-                <FormFeedback>{emailErrorMessage}</FormFeedback>
-              </FormGroup>
-            </>
-          )}
+                <FormGroup floating>
+                  <Input
+                    required
+                    bsSize='sm'
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter email"
+                    value={emailValue}
+                    invalid={isEmailTouched && !isEmailValid}
+                    onBlur={handleBur}
+                    onChange={handleChange}
+                    style={{ letterSpacing: '5px' }}
+                    className="text-light text-light-emphasis bg-darker border-dark"
+                  />
+                  <Label for="email" className="text-secondary beta-form-label">Email</Label>
+                  <FormFeedback>{emailErrorMessage}</FormFeedback>
+                </FormGroup>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {formStep === 1 && (
-            <>
-              <FormGroup floating>
-                <Input
-                  required
-                  bsSize='sm'
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Enter password"
-                  value={passwordValue}
-                  invalid={isPasswordTouched && !isPasswordValid}
-                  onBlur={handleBur}
-                  onChange={handleChange}
-                  className="text-light text-light-emphasis bg-darker border-dark"
-                />
-                <Label for="password" className="text-secondary beta-form-label">Password</Label>
-                <FormFeedback>{passwordErrorMessage}</FormFeedback>
-              </FormGroup>
+          <AnimatePresence mode="wait">
+            {formStep === 1 && (
+              <motion.div initial="hidden" animate="visible" exit="hidden">
+                <FormGroup floating>
+                  <Input
+                    required
+                    bsSize='sm'
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter password"
+                    value={passwordValue}
+                    invalid={isPasswordTouched && !isPasswordValid}
+                    onBlur={handleBur}
+                    onChange={handleChange}
+                    style={{ letterSpacing: '5px' }}
+                    className="text-light text-light-emphasis bg-darker border-dark"
+                  />
+                  <Label for="password" className="text-secondary beta-form-label">Password</Label>
+                  <FormFeedback>{passwordErrorMessage}</FormFeedback>
+                </FormGroup>
 
-              <FormGroup floating>
-                <Input
-                  required
-                  bsSize='sm'
-                  type="password"
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  placeholder="Confirm password"
-                  value={confirmPasswordValue}
-                  invalid={isConfirmPasswordTouched && !isConfirmPasswordValid}
-                  onBlur={handleBur}
-                  onChange={handleChange}
-                  className="text-light text-light-emphasis bg-darker border-dark"
-                />
-                <Label for="confirmPassword" className="text-secondary beta-form-label">Confirm Password</Label>
-                <FormFeedback>{confirmPasswordErrorMessage}</FormFeedback>
-              </FormGroup>
+                <FormGroup floating>
+                  <Input
+                    required
+                    bsSize='sm'
+                    type="password"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    value={confirmPasswordValue}
+                    invalid={isConfirmPasswordTouched && !isConfirmPasswordValid}
+                    onBlur={handleBur}
+                    onChange={handleChange}
+                    style={{ letterSpacing: '5px' }}
+                    className="text-light text-light-emphasis bg-darker border-dark"
+                  />
+                  <Label for="confirmPassword" className="text-secondary beta-form-label">Confirm Password</Label>
+                  <FormFeedback>{confirmPasswordErrorMessage}</FormFeedback>
+                </FormGroup>
 
-              <FormGroup className="d-flex justify-content-center">
-                <ReCAPTCHA 
-                  theme="dark"
-                  sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
-                />
-              </FormGroup>
-            </>
-          )}
+                <motion.div initial="hidden" animate="visible" exit="hidden">
+                  <FormGroup className="d-flex justify-content-center">
+                    <ReCAPTCHA 
+                      theme="dark"
+                      sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} ref={recaptchaRef}
+                    />
+                  </FormGroup>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
             <div className="d-flex">
               <Button
@@ -272,6 +285,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
               )}
             </div>
         </Form>
+        </motion.div>
       </CardBody>
     </Card>
   );

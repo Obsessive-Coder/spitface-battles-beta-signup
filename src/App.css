@@ -5,7 +5,7 @@
 
 .sfb-title {
   line-height: 4rem;
-  letter-spacing: 12px;
+  letter-spacing: 15px;
   font-size: 4rem;
 }
 
@@ -23,7 +23,7 @@
   font-weight: bold;
   border-radius: 0;
   color: #f8f9fa;
-  background-color: #222;
+  background-color: #1A1A1A;
 }
 
 .card-container {
@@ -38,7 +38,7 @@
 .main-card {
   background: linear-gradient(145deg, #333, #111); 
   color: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
   /* transform: rotateX(-15deg) rotateY(15deg) rotateZ(-2deg); 
   transform-origin: center bottom;  */
 }
@@ -46,9 +46,9 @@
 .secondary-card {
   /* width: 25rem; */
   /* left: 20px; */
-  background: linear-gradient(145deg, #222, #000); 
+  /* background: linear-gradient(145deg, #222, #000);  */
   color: #fff;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7); 
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5); 
   /* margin-top: 1rem; */
   /* transform: rotateX(50deg) rotateY(7deg) rotateZ(-17deg); 
   transform-origin: center center; */
@@ -61,8 +61,22 @@
   aspect-ratio: 16/9;
 }
 
+.beta-form-label {
+  letter-spacing: 5px;
+}
+
 .beta-form-label::after{
   background-color: #111 !important;
+}
+
+.copy-text {
+  font-size: 2rem;
+  letter-spacing: 3px;
+  text-wrap: nowrap;
+}
+
+.contact-text {
+  text-wrap: nowrap;
 }
 
 #countdown-timer {
@@ -74,21 +88,21 @@
 }
 
 .flip-clock {
-  --fcc-flip-duration: 0.5s; /* transition duration when flip card */
+  --fcc-flip-duration: 5s; /* transition duration when flip card */
   --fcc-spacing: 10px; /* space between unit times and separators */
   --fcc-digit-block-width: 60px; /* width of digit card */
   --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
   --fcc-digit-block-radius: 50%; /* border radius of digit card */
   --fcc-digit-block-spacing: 5px; /* space between blocks in each unit of time */
   --fcc-digit-font-size: 30px; /* font size of digit */
-  --fcc-digit-color: rgb(255, 140, 0); /* color of digit */
+  --fcc-digit-color: #A47E3B; /* color of digit */
   --fcc-label-font-size: 0.7rem; /* font size of label */
-  --fcc-label-color: #888; /* color of label */
-  --fcc-background: #222; /* background of digit card */
+  --fcc-label-color: #99c68c; /* color of label */
+  --fcc-background: #1A1A1A; /* background of digit card */
   --fcc-divider-color: #111; /* color of divider */
   --fcc-divider-height: 1px; /* height of divider */
   --fcc-separator-size: 6px; /* size of colon */
-  --fcc-separator-color: red; /* color of colon */
+  --fcc-separator-color: #333; /* color of colon */
 }
 
 @media (min-width: 992px) {
@@ -119,6 +133,10 @@
     transform: scale(1.2);
     /* Slightly larger for extra-large screens */
   }
+
+  .info-text {
+    text-wrap: nowrap;
+  }
 }
 
 /* Normal size for medium to large screens */
@@ -144,6 +162,11 @@
 @media (max-width: 991px) {
   .beta-trailer {
     height: 369px !important;
+  }
+
+  .copy-text,
+  .contact-text {
+    text-wrap: wrap;
   }
 }
 
@@ -173,6 +196,11 @@
   .sfb-title {
     font-size: 2.25rem;
     line-height: 2.25rem;
+  }
+
+  .copy-text {
+    font-size: 1.75rem;
+    letter-spacing: 3px;
   }
 }
 
@@ -204,6 +232,11 @@
     font-size: 2rem;
     line-height: 2rem;
   }
+
+  .copy-text {
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -221,11 +254,9 @@
   .beta-trailer {
     height: 180px !important;
   }
-}
 
-.gradient-icon {
-  background: linear-gradient(to right, #007bff, #6610f2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  .copy-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
 }

@@ -25,7 +25,7 @@ function BetaCountDownCard({ usersCount = 0}) {
         </div>
 
         <div className='flex-fill'>
-          <CardTitle className="text-center fw-bold m-0 flavors-regular sfb-title">
+          <CardTitle className="text-center fw-bold m-0 text-primary-orange flavors-regular sfb-title">
             SpItFaCe BaTtLeS
           </CardTitle>
         </div>
@@ -37,7 +37,7 @@ function BetaCountDownCard({ usersCount = 0}) {
       </CardHeader>
 
       <CardBody className="text-bg-darkest rounded-0 p-0">
-        <CardText className="text-center text-uppercase fst-italic bangers-regular sfb-subtitle">
+        <CardText className="text-center text-uppercase fst-italic text-secondary-green bangers-regular sfb-subtitle">
           <span className="fs-1">The stage is yours!</span>
           <small className="d-block fs-3 fw-bold">May 1, 2025</small>
         </CardText>
@@ -45,7 +45,7 @@ function BetaCountDownCard({ usersCount = 0}) {
         <Container fluid className="d-flex flex-column align-items-center">
           <FlipClockCountdown
             to={'05/01/2025'}
-            showSeparators={false}
+            showSeparators={true}
             labels={['days', 'hours', 'mins', 'secs']}
             className="justify-content-center my-2 permanent-marker-regular flip-clock"
           />
@@ -54,9 +54,9 @@ function BetaCountDownCard({ usersCount = 0}) {
         </Container>
       </CardBody>
 
-      <CardFooter className="d-flex text-uppercase text-bg-darkest border-0 rounded-0 rubik-spray-paint-regular">
+      <CardFooter style={{ letterSpacing: '3px' }} className="d-flex text-uppercase text-bg-darkest border-0 rounded-0 text-secondary-purple rubik-spray-paint-regular">
         {['Your Voice!', 'Your Skills!', 'Your Stage!'].map((item, index) => (
-          <span key={`copy-${item}`} className={`flex-grow-1 flex-basis-0 fs-1 text-center p-2 ${index === 1 ? 'mx-3' : 'mx-sm-3'}`}>
+          <span key={`copy-${item}`} className={`flex-grow-1 flex-basis-0 text-center p-2 ${index === 1 ? 'mx-3' : 'mx-sm-3'} copy-text`}>
             {item}
           </span>
         ))}
