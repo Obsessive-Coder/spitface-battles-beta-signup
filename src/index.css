@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Anton&family=Bangers&family=Flavors&family=Londrina+Outline&family=Permanent+Marker&family=Rubik+Spray+Paint&family=Sigmar&display=swap');
-
 body {
   background-color: #1A1A1A !important;
   color: #888;
@@ -13,55 +11,6 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center; */
-}
-
-/* Fonts */
-.flavors-regular {
-  font-family: "Flavors", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.bangers-regular {
-  font-family: "Bangers", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.permanent-marker-regular {
-  font-family: "Permanent Marker", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.rubik-spray-paint-regular {
-  font-family: "Rubik Spray Paint", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.londrina-outline-regular {
-  font-family: "Londrina Outline", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.annie-use-your-telescope-regular {
-  font-family: "Annie Use Your Telescope", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.sigmar-regular {
-  font-family: "Sigmar", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.anton-regular {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-style: normal;
 }
 
 .alert-confirm:focus {
@@ -164,4 +113,93 @@ body {
 
 .fs-smaller {
   font-size: smaller;
+}
+
+/* Fonts */
+.annie-use-your-telescope-regular {
+  font-family: "Annie Use Your Telescope", cursive;
+}
+
+.anton-regular {
+  font-family: "Anton", sans-serif;
+}
+
+.bangers-regular {
+  font-family: "Bangers", system-ui;
+}
+
+.flavors-regular {
+  font-family: "Flavors", cursive;
+}
+
+.londrina-outline-regular {
+  font-family: "Londrina Outline", sans-serif;
+}
+
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+}
+
+.rubik-spray-paint-regular {
+  font-family: "Rubik Spray Paint", system-ui;
+}
+
+.sigmar-regular {
+  font-family: "Sigmar", sans-serif;
+}
+
+@font-face {
+  font-family: "Annie Use Your Telescope";
+  src: url('./fonts/AnnieUseYourTelescope-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Anton";
+  src: url('./fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bangers';
+  src: url('./fonts/Bangers-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Flavors';
+  src: url('./fonts/Flavors-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Londrina Outline';
+  src: url('./fonts/LondrinaOutline-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Permanent Marker';
+  src: url('./fonts/PermanentMarker-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rubik Spray Paint';
+  src: url('./fonts/RubikSprayPaint-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sigmar';
+  src: url('./fonts/Sigmar-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
