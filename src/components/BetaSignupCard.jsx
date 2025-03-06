@@ -148,7 +148,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
   return (
     <Card className="rounded-0 border-0 bg-darkest secondary-card">
       <CardHeader className="text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
-        <CardTitle className="text-center fs-1 fw-bold m-0 londrina-outline-regular">Beta Signup</CardTitle>
+        <CardTitle className="text-center fs-1 fw-bold m-0 text-primary-orange londrina-outline-regular">Beta Signup</CardTitle>
       </CardHeader>
 
       <CardBody className="text-bg-darkest rounded-0">

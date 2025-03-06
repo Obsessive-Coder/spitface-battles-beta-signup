@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Anton&family=Bangers&family=Flavors&family=Londrina+Outline&family=Nosifer&family=Oi&family=Permanent+Marker&family=Rubik+Dirt&family=Rubik+Spray+Paint&family=Sigmar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Anton&family=Bangers&family=Flavors&family=Londrina+Outline&family=Permanent+Marker&family=Rubik+Spray+Paint&family=Sigmar&display=swap');
 
 body {
   background-color: #222 !important;
@@ -16,38 +16,8 @@ body {
 }
 
 /* Fonts */
-.rubik-spray-paint-regular {
-  font-family: "Rubik Spray Paint", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.rubik-dirt-regular {
-  font-family: "Rubik Dirt", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
 .flavors-regular {
   font-family: "Flavors", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.nosifer-regular {
-  font-family: "Nosifer", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.frijole-regular {
-  font-family: "Frijole", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.londrina-outline-regular {
-  font-family: "Londrina Outline", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
@@ -58,8 +28,20 @@ body {
   font-style: normal;
 }
 
-.oi-regular {
-  font-family: "Oi", serif;
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rubik-spray-paint-regular {
+  font-family: "Rubik Spray Paint", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.londrina-outline-regular {
+  font-family: "Londrina Outline", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
@@ -76,21 +58,11 @@ body {
   font-style: normal;
 }
 
-.permanent-marker-regular {
-  font-family: "Permanent Marker", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
 .anton-regular {
   font-family: "Anton", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
-
-
-
 
 .alert-confirm:focus {
   background-color: rgb(255,140,0);

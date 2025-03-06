@@ -14,7 +14,7 @@ const icons = [{
   url: 'https://www.facebook.com/people/Spitface-Battles/61573456003674/'
 }, {
   icon: faXTwitter,
-  color: '#000000',
+  color: '#e7e9ea',
   url: 'https://x.com/SpitfaceBattles/',
 }, {
   icon: faYoutube,
@@ -34,7 +34,7 @@ function InfoCard() {
   return (
     <Card className="flex-fill my-4 my-lg-0 ms-lg-5 rounded-0 border-0 bg-darkest secondary-card">
         <CardHeader className="d-flex justify-content-around text-bg-darkest rounded-0 border-0 border-bottom border-primary-orange">
-            <CardTitle className="text-center fs-1 fw-bold m-0 londrina-outline-regular">Get Connected</CardTitle>
+            <CardTitle className="text-center fs-1 fw-bold m-0 text-primary-orange londrina-outline-regular">Get Connected</CardTitle>
         </CardHeader>
 
         <CardBody className="d-flex flex-column text-bg-darkest rounded-0">
