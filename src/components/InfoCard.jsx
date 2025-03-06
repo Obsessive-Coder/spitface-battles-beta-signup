@@ -39,7 +39,7 @@ function InfoCard() {
         </CardHeader>
 
         <CardBody className="d-flex flex-column text-bg-darkest rounded-0">
-            <CardText className="text-center fs-4 m-0 text-secondary sigmar-regular info-text" style={{ letterSpacing: '2px' }}>
+            <CardText className="text-center fs-5 m-0 text-secondary sigmar-regular info-text" style={{ letterSpacing: '2px' }}>
                 Follow our socials for updates & more!
             </CardText>
 
@@ -53,9 +53,9 @@ function InfoCard() {
                         className="m-3 m-lg-2 text-decoration-none text-secondary"
                     >
                       {index === icons.length - 1 ? (
-                        <img src={icon} alt="instagram" className='svg-inline--fa fa-discord fa-4x '/>
+                        <img src={icon} alt="instagram" className='svg-inline--fa fa-discord fa-3x '/>
                       ) : (
-                        <FontAwesomeIcon icon={icon} size="4x" style={{ color }} className={iconClassName} />
+                        <FontAwesomeIcon icon={icon} size="3x" style={{ color }} className={iconClassName} />
                       )}
                     </a>
                 ))}

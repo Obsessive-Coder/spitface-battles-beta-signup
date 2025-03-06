@@ -76,7 +76,7 @@
 }
 
 .contact-text {
-  text-wrap: nowrap;
+  /* text-wrap: nowrap; */
 }
 
 #countdown-timer {
@@ -97,10 +97,10 @@
   --fcc-digit-font-size: 30px; /* font size of digit */
   --fcc-digit-color: #A47E3B; /* color of digit */
   --fcc-label-font-size: 0.7rem; /* font size of label */
-  --fcc-label-color: #99c68c; /* color of label */
+  --fcc-label-color: #495057; /* color of label */
   --fcc-background: #1A1A1A; /* background of digit card */
   --fcc-divider-color: #111; /* color of divider */
-  --fcc-divider-height: 1px; /* height of divider */
+  --fcc-divider-height: 2px; /* height of divider */
   --fcc-separator-size: 6px; /* size of colon */
   --fcc-separator-color: #333; /* color of colon */
 }
@@ -114,6 +114,7 @@
     --fcc-digit-font-size: 4rem;
     --fcc-digit-block-height: 85px;
     --fcc-digit-block-width: 85px;
+    --fcc-separator-size: 10px;
   }
 
   .beta-trailer {

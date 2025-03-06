@@ -55,7 +55,7 @@ function BetaCountDownCard({ usersCount = 0}) {
       </CardBody>
 
       <CardFooter style={{ letterSpacing: '3px' }} className="d-flex text-uppercase text-bg-darkest border-0 rounded-0 text-secondary-purple rubik-spray-paint-regular">
-        {['Your Voice!', 'Your Skills!', 'Your Stage!'].map((item, index) => (
+        {['Your Skills!', 'Your Voice!', 'Your Stage!'].map((item, index) => (
           <span key={`copy-${item}`} className={`flex-grow-1 flex-basis-0 text-center p-2 ${index === 1 ? 'mx-3' : 'mx-sm-3'} copy-text`}>
             {item}
           </span>
