@@ -8,7 +8,7 @@ import { Card, CardBody, CardHeader, CardTitle, CardText, Form, FormGroup, Label
 import { motion, AnimatePresence } from 'motion/react';
 
 import { validateEmail, validateUsername, validatePassword } from '../utils';
-import { createUser } from '../utils/firebase/auth';
+import { createUser, checkEmailAvailability } from '../utils/firebase/auth';
 import { checkUsernameAvailability, storeUsername } from '../utils/firebase/firestore';
 
 const defaultFormData = {
@@ -78,15 +78,16 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
       } = formData;
       setIsLoading(true);
       const isUsernameAvailable = await checkUsernameAvailability(usernameValue);
+      const isEmailAvailable = await checkEmailAvailability(emailValue);
       
-      if (isUsernameAvailable) {
+      if (isUsernameAvailable && isEmailAvailable) {
         const { uid: userId } = await createUser(usernameValue, emailValue, passwordValue);
         await storeUsername(userId, usernameValue);
         updateUsersCount();
         alertMessage = `Hi ${usernameValue}, We've sent a verification link to ${emailValue}. Please check your inbox and click the link to confirm your account.`;
       }
     } catch ({ code = '', cause, message = '' }) {
-      if (code === 'auth/email-already-in-use') {
+      if (code === 'auth/email-already-in-use' || cause?.code === 'custom/email-already-in-use') {
         alertMessage = 'The provided email address is already in use.';
       } else if (cause?.code === 'custom/username-already-in-use') {
         alertMessage = 'The provided username is already in use.';
@@ -110,15 +111,39 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
       }});
   };
 
-  const handleBur = ({ target: {name, value }}) => {
-    const validation = handleValidation(name, value);
-    setFormData({
-      ...formData,
-      [name]: {
-        ...formData[name],
-        ...validation,
-        isTouched: true
-      }});
+  const handleBur = async ({ target: {name, value }}) => {
+    let validation = handleValidation(name, value);
+
+    try {
+      if (name === 'username') {
+        setIsLoading(true);
+        await checkUsernameAvailability(value);
+      }
+      
+      if (name === 'email') {
+        setIsLoading(true);
+        await checkEmailAvailability(value);
+      } 
+    } catch ({ code = '', cause, message: errorMessage }) {
+      let message = errorMessage;
+      if (code === 'auth/email-already-in-use' || cause?.code === 'auth/email-already-in-use') {
+        message = 'The provided email address is already in use.';
+        validation = { ...validation, message, isValid: false };
+      } else if (cause?.code === 'custom/username-already-in-use') {
+        message = 'The provided username is already in use.';
+        validation = { ...validation, message, isValid: false };
+      }
+    }finally {
+      setIsLoading(false);
+
+      setFormData({
+        ...formData,
+        [name]: {
+          ...formData[name],
+          ...validation,
+          isTouched: true
+        }});
+    }
   };
 
   const handleFormNextPrevClick = event => {
@@ -173,6 +198,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                     placeholder="Enter username"
                     value={usernameValue}
                     invalid={isUsernameTouched && !isUsernameValid}
+                    tabIndex={1}
                     onBlur={handleBur}
                     onChange={handleChange}
                     style={{ letterSpacing: '5px' }}
@@ -192,6 +218,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                     placeholder="Enter email"
                     value={emailValue}
                     invalid={isEmailTouched && !isEmailValid}
+                    tabIndex={2}
                     onBlur={handleBur}
                     onChange={handleChange}
                     style={{ letterSpacing: '5px' }}
@@ -210,6 +237,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                 <FormGroup floating>
                   <Input
                     required
+                    autoFocus
                     bsSize='sm'
                     type="password"
                     name="password"
@@ -217,6 +245,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                     placeholder="Enter password"
                     value={passwordValue}
                     invalid={isPasswordTouched && !isPasswordValid}
+                    tabIndex={1}
                     onBlur={handleBur}
                     onChange={handleChange}
                     style={{ letterSpacing: '5px' }}
@@ -236,6 +265,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                     placeholder="Confirm password"
                     value={confirmPasswordValue}
                     invalid={isConfirmPasswordTouched && !isConfirmPasswordValid}
+                    tabIndex={2}
                     onBlur={handleBur}
                     onChange={handleChange}
                     style={{ letterSpacing: '5px' }}
@@ -264,6 +294,7 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                 name={formStep === 0 ? 'next' : 'previous'}
                 type='button'
                 size="sm"
+                tabIndex={formStep === 0 ? 3 : 4}
                 disabled={formStep === 0 && !isFormValid}
                 onClick={handleFormNextPrevClick}
                 className={`text-bg-darkest btn-outline-primary ${formStep > 0 && 'flex-basis-0 me-3'}`}
@@ -277,6 +308,8 @@ const BetaSignupCard = ({ showAlert, updateUsersCount }) => {
                   id="submit"
                   type='submit'
                   size="sm"
+                  tabIndex={3}
+
                   disabled={isLoading || !isFormValid}
                   className="flex-fill text-bg-darkest btn-outline-primary"
                 >
