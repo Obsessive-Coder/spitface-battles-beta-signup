@@ -1,3 +1,5 @@
+import { isUsernameRestricted } from "./helpers";
+
 export const INVALID_CHARACTERS = ['<', '>', '\\', '`', '{', '|', '}'];
 
 export const validateUsername = username => {
@@ -21,6 +23,11 @@ export const validateUsername = username => {
   if (username.length < 3 || username.length > 22) {
     response.isValid = false;
     response.message = "Username must be between 3 and 22 characters.";
+  }
+
+  if (isUsernameRestricted(username)) {
+    response.isValid = false;
+    response.message = "Username is restricted.";
   }
 
   if (!username || username === '') {
