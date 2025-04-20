@@ -78,7 +78,7 @@ export const validatePassword = (password, confirmPassword = null) => {
     response.message = "Please enter a valid password";
   }
 
-  if (passwordValidating.length < 8 || passwordValidating.length > 4096) {
+  if (passwordValidating.length < 8 || passwordValidating.length > 22) {
     response.isValid = false;
     response.message = "Password must be between 8 and 4096 characters."
   }
