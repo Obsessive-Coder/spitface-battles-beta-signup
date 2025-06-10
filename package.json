@@ -1,6 +1,6 @@
 {
   "name": "spitface-battles-beta-signup",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
